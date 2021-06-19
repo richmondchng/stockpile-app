@@ -1,4 +1,4 @@
-import {useState} from 'react'
+import { useState } from 'react'
 
 const DataImport = ({schema}) => {
     const [file, setFile] = useState('');
@@ -17,7 +17,7 @@ const DataImport = ({schema}) => {
 
         console.log(`Uploading file to ${schema}`)
         try {
-            const res = await fetch(`http://localhost:8090/api/v1.0/import/${schema}`, {
+            const res = await fetch(`/api/v1.0/import/${schema}`, {
                 method: 'POST',
                 body: formData
             });
