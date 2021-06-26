@@ -25,6 +25,7 @@ const DataImport = ({schema}) => {
             if(res.status === 200) {
                 const resData = await res.json();
                 console.log(resData);
+                alert("Upload successful");
             } else {
                 console.log("Error " + res.status);
             }
