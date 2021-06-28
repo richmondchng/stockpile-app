@@ -1,7 +1,7 @@
 import './App.css';
 import {useState, useEffect} from 'react';
 import NavBar from './components/common/NavBar';
-import DataImport from './components/DataImport';
+import DataImport from './components/import/DataImport';
 import AlertMessage from './components/AlertMessage';
 
 function App() {
@@ -19,7 +19,7 @@ function App() {
             <NavBar id="navigation"></NavBar>
             {/* <AlertMessage message={message.message} messageStyle={message.messageStyle} show={message.show} /> */}
             <div className="container" id="content">
-                <DataImport schema='articles' />
+                <DataImport />
             </div>
         </div>
     );
