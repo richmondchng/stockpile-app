@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 
 /**
  * Single navigation item.
@@ -11,8 +12,9 @@ const NavBarItem = ({label, link = "#", active = false}) => {
 
     return (
         <li className="nav-item">
-            <a className={activeClass} {... ariaCurrent} 
-                href={link}>{label}</a>
+            <Link className={activeClass} {... ariaCurrent} to={link}>{label}</Link>
+            {/* <a className={activeClass} {... ariaCurrent} 
+                href={link}>{label}</a> */}
         </li>
     )
 }

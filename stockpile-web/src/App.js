@@ -1,26 +1,30 @@
 import './App.css';
-import {useState, useEffect} from 'react';
+import { Route, Switch, BrowserRouter as Router } from 'react-router-dom';
 import NavBar from './components/common/NavBar';
-import DataImport from './components/import/DataImport';
-import AlertMessage from './components/AlertMessage';
+import DataImport from './components/pages/DataImport';
+import Home from './components/pages/Home';
+import About from './components/pages/About';
 
 function App() {
 
-    const [successMessage, setSuccessMessage] = useState('');
-
-    const [message, setMessage] = useState({
-        messageStyle: "info",
-        message: "Hello",
-        show: false
-    });
-
     return (
         <div className='container-fluid'>
-            <NavBar id="navigation"></NavBar>
-            {/* <AlertMessage message={message.message} messageStyle={message.messageStyle} show={message.show} /> */}
-            <div className="container" id="content">
-                <DataImport />
-            </div>
+            <Router>
+                <NavBar id="navigation"></NavBar>
+                <div className="container" id="content">
+                    <Switch>
+                        <Route path="/data-import">
+                            <DataImport />
+                        </Route>
+                        <Route path="/about">
+                            <About />
+                        </Route>
+                        <Route exact path="/">
+                            <Home />
+                        </Route>
+                    </Switch>
+                </div>
+            </Router>
         </div>
     );
 }
