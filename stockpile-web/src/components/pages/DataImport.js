@@ -28,7 +28,7 @@ const DataImport = () => {
         };
         
         getUploadSchemas();
-    });
+    }, []);
 
     const onSubmit = async (e) => {
         e.preventDefault();
@@ -84,7 +84,7 @@ const DataImport = () => {
                 </div> */}
 
                 <div className="mb-3">
-                    <label htmlFor="formFile" for="schema" className="form-label">Upload Schema</label>
+                    <label htmlFor="schema" className="form-label">Upload Schema</label>
                     <select className="form-select form-select-sm mb-3" aria-label=".form-select-sm example" 
                         id="schema" defaultValue="blank" onChange={v => {setSchema(v.target.value)}}>
                             <option key="blank">Choose upload schema</option>
