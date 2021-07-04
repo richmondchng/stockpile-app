@@ -9,7 +9,7 @@ import ArticleListing from './components/pages/ArticleListing';
 function App() {
 
     return (
-        <div className='container-fluid'>
+        <div>
             <Router>
                 <NavBar id="navigation"></NavBar>
                 <div className="container" id="content">
