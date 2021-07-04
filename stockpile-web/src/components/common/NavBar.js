@@ -14,6 +14,7 @@ const NavBar = () => {
                 <div className="collapse navbar-collapse" id="navbarText">
                     <ul className="navbar-nav">
                         <NavBarItem label="Home" link="/" active="true"></NavBarItem>
+                        <NavBarItem label="Article" link="/articles"></NavBarItem>
                         <NavBarItem label="Upload" link="/data-import"></NavBarItem>
                         <NavBarItem label="About" link="/about"></NavBarItem>
 
