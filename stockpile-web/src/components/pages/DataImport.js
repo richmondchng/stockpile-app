@@ -65,24 +65,8 @@ const DataImport = () => {
 
     return (
         <div>
-            <h2>Data Import</h2>
+            <PageTitle>Data Import</PageTitle>
             <form onSubmit={onSubmit}>
-                {/* <div class="row g-3 align-items-center">
-                    <div class="col-2">
-                        <label for="schema2" class="col-form-label">Password</label>
-                    </div>
-                    <div class="col-auto">
-                        <select className="form-select form-select-sm mb-3" aria-label=".form-select-sm example" 
-                            id="schema2" defaultValue="blank" onChange={v => {setSchema(v.target.value)}}>
-
-                            <option key="blank">Choose upload schema</option>
-                            {uploadSchemas && uploadSchemas.length && uploadSchemas.map((value) => {
-                                return <option key={value.schema} value={value.schema}>{value.name}</option>
-                            })}
-                        </select>
-                    </div>
-                </div> */}
-
                 <div className="mb-3">
                     <label htmlFor="schema" className="form-label">Upload Schema</label>
                     <select className="form-select form-select-sm mb-3" aria-label=".form-select-sm example" 
@@ -97,7 +81,7 @@ const DataImport = () => {
                     <input className="form-control form-control-sm" type="file" id="formFile" placeholder={fileName}
                         onChange={onChange} />
                 </div>
-                <input type="submit" className="btn btn-primary btn-block btn-sm" value="Import Data" />
+                <input type="submit" className="btn btn-dark btn-block btn-sm" value="Import Data" />
             </form>
         </div>
     );
