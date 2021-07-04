@@ -3,7 +3,7 @@ import NavBarItem from './NavBarItem';
 /**
  * Page navigation bar.
  */
-const NavBar = () => {
+const NavBar = ({children}) => {
     return (
         <nav className="navbar navbar-expand-sm navbar-dark bg-dark">
             <div className="container-fluid">
@@ -13,13 +13,7 @@ const NavBar = () => {
                 </button>
                 <div className="collapse navbar-collapse" id="navbarText">
                     <ul className="navbar-nav">
-                        <NavBarItem id="navHome" label="Home" link="/" active="true"></NavBarItem>
-                        <NavBarItem id="navArticle" label="Article" link="/articles"></NavBarItem>
-                        <NavBarItem id="navUpload" label="Upload" link="/data-import"></NavBarItem>
-                        <NavBarItem id="navAbout" label="About" link="#">
-                            <NavBarItem id="navConfigureUploadSchema" label="Configure upload schema" link="#" />
-                            <NavBarItem id="navAboutUs" label="About" link="/about" />
-                        </NavBarItem>
+                        {children}
                     </ul>
                 </div>
             </div>

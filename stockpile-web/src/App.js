@@ -1,6 +1,6 @@
 import './App.css';
 import { Route, Switch, BrowserRouter as Router } from 'react-router-dom';
-import NavBar from './components/common/NavBar';
+import Navigation from './components/common/Navigation';
 import Home from './components/pages/Home';
 import About from './components/pages/About';
 import DataImport from './components/pages/DataImport';
@@ -11,7 +11,7 @@ function App() {
     return (
         <div>
             <Router>
-                <NavBar id="navigation"></NavBar>
+                <Navigation id="navigation"></Navigation>
                 <div className="container" id="content">
                     <Switch>
                         <Route path="/articles"><ArticleListing /></Route>
