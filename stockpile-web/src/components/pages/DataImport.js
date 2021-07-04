@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import PageTitle from '../common/PageTitle';
 
 const DataImport = () => {
     const [file, setFile] = useState('');
