@@ -11,7 +11,7 @@ function App() {
     return (
         <div>
             <Router>
-                <Navigation id="navigation"></Navigation>
+                <Navigation id="navigation" brand="Stockpile"></Navigation>
                 <div className="container" id="content">
                     <Switch>
                         <Route path="/articles"><ArticleListing /></Route>
