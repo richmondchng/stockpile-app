@@ -1,3 +1,5 @@
+// import PropTypes from 'prop-types';
+// import NavBarItem from './NavBarItem';
 
 /**
  * Page navigation bar.
@@ -19,5 +21,12 @@ const NavBar = ({brand, children}) => {
         </nav>
     )
 }
+
+// NavBar.propTypes = {
+//     children: PropTypes.oneOfType([
+//         PropTypes.arrayOf(NavBarItem),
+//         PropTypes.objectOf(NavBarItem)
+//     ])
+// }
 
 export default NavBar
