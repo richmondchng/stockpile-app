@@ -79,6 +79,7 @@ const DataImport = () => {
                     </select>
                 </div>
                 <div className="mb-3">
+                    <label htmlFor="formFile" className="form-label">Upload File (CSV)</label>
                     <input className="form-control form-control-sm" type="file" id="formFile" placeholder={fileName}
                         onChange={onChange} />
                 </div>
