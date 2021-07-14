@@ -17,7 +17,7 @@ const DataImport = () => {
     useEffect(() => {
         const getUploadSchemas = async () => {
             try {
-                const response = await fetch('/api/v1.0/import/', { method: 'GET'});
+                const response = await fetch('/api/v1.0/schemas', { method: 'GET'});
                 if(response.status === 200) {
                     const jsonData = await response.json();
                     //console.log(jsonData.data);
@@ -47,7 +47,7 @@ const DataImport = () => {
         formData.append('file', file);
         console.log(`Uploading file to ${schema}`)
         try {
-            const res = await fetch(`/api/v1.0/import/${schema}`, {
+            const res = await fetch(`/api/v1.0/schemas/${schema}`, {
                 method: 'POST',
                 body: formData
             });

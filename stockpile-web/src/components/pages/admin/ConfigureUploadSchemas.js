@@ -12,7 +12,7 @@ const ConfigureUploadSchemas = () => {
     useEffect(() => {
         const getUploadSchemas = async () => {
             try {
-                const response = await fetch('/api/v1.0/import/', { method: 'GET'});
+                const response = await fetch('/api/v1.0/schemas', { method: 'GET'});
                 if(response.status === 200) {
                     const jsonData = await response.json();
                     setUploadSchemas(jsonData.data);
