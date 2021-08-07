@@ -2,9 +2,12 @@ import PropTypes from 'prop-types';
 import PopupModalBody from './PopupModalBody';
 import PopupModalButtonBar from './PopupModalButtonBar';
 
-const PopupModal = ({id, title, children, onClose = () => {}}) => {
-    
-    //const onCloseAction = close ? {onClick : close} : {};
+/**
+ * Popup dialog modal box.
+ * @param {*} param0 
+ * @returns 
+ */
+const PopupModal = ({id, title = 'Title', children, closeAction = () => {}}) => {
 
     return (
         <div className="modal fade" id={id} data-bs-backdrop="static" data-bs-keyboard="false" tabIndex="-1" aria-labelledby={`${id}_label`} aria-hidden="true">          
@@ -12,7 +15,7 @@ const PopupModal = ({id, title, children, onClose = () => {}}) => {
                 <div className="modal-content">
                     <div className="modal-header">
                         <h5 className="modal-title" id={`${id}_label`}>{title}</h5>
-                        <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close" onClick={onClose}></button>
+                        <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close" onClick={closeAction}></button>
                     </div>
                     {children}
                 </div>
@@ -22,14 +25,10 @@ const PopupModal = ({id, title, children, onClose = () => {}}) => {
 }
 
 PopupModal.propTypes = {
-    //children: PropTypes.node.isRequired
     children: PropTypes.oneOfType([
-        // PropTypes.objectOf(PopupModalBody).isRequired,
-
         PropTypes.shape({
             type: PropTypes.oneOf([PopupModalBody])
         }),
-
         PropTypes.arrayOf(
             PropTypes.oneOfType([
                 PropTypes.shape({
@@ -40,16 +39,10 @@ PopupModal.propTypes = {
                 })
             ])
         )
-    ]).isRequired
-
-    // children: function(props, propName, componentName) {
-    //     if (!/matchme/.test(props[propName])) {
-    //       return new Error(
-    //         'Invalid prop `' + props[propName] + '` supplied to' +
-    //         ' `' + componentName + '`. Validation failed.'
-    //       );
-    //     }
-    //   }
+    ]).isRequired,
+    closeAction: PropTypes.func,
+    id: PropTypes.string.isRequired,
+    title: PropTypes.string.isRequired
 }
 
 export default PopupModal

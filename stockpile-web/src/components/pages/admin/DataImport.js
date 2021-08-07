@@ -1,6 +1,10 @@
 import { useState, useEffect } from 'react'
-import PageTitle from '../common/PageTitle';
+import PageTitle from '../../common/PageTitle';
 
+/**
+ * Data import screen
+ * @returns 
+ */
 const DataImport = () => {
     const [file, setFile] = useState('');
     const [schema, setSchema] = useState('');
@@ -35,11 +39,11 @@ const DataImport = () => {
         e.preventDefault();
 
         if(!schema) {
-            alert("im not okay");
+            alert("Schema is required");
             return false;
         }
         if(!file) {
-            alert("im not okay 2");
+            alert("File is required");
             return false;
         }
         

@@ -3,6 +3,9 @@ import PageTitle from '../../common/PageTitle';
 import PopupModal from '../../common/popup/PopupModal';
 import PopupModalBody from '../../common/popup/PopupModalBody';
 import PopupModalButtonBar from '../../common/popup/PopupModalButtonBar';
+import Form from '../../common/form/Form';
+import TextInput from '../../common/form/TextInput';
+import Button from '../../common/form/Button';
 
 /**
  * Screen to view and configure upload schema.
@@ -12,15 +15,27 @@ const ConfigureUploadSchemas = () => {
 
     // list of upload schemas
     const [uploadSchemas, setUploadSchemas] = useState([]);
+    const [reloadTable, setReloadTable] = useState(0);
+    const [disableButton, setDisableButton] = useState(false);
     // current selected schema
-    const [currentSchema, setCurrentSchema] = useState({
-        schema: "",
-        topic: ""
+    const [schemaName, setSchemaName] = useState("");
+    const [schemaDesc, setSchemaDesc] = useState("");
+    const [schemaTopic, setSchemaTopic] = useState("");
+    const [newSchema, setNewSchema] = useState({
+        name: schemaName,
+        description: schemaDesc,
+        topic: schemaTopic,
     });
+    // const [currentSchema, setCurrentSchema] = useState({
+    //     name: schemaName,
+    //     description: schemaDesc,
+    //     topic: schemaTopic,
+    // });
 
     // get list of upload schemas to populate table
     useEffect(() => {
         const getUploadSchemas = async () => {
+            console.log("get available schemas");
             try {
                 const response = await fetch('/api/v1.0/schemas', { method: 'GET'});
                 if(response.status === 200) {
@@ -32,16 +47,50 @@ const ConfigureUploadSchemas = () => {
             }
         };
         getUploadSchemas();
-    }, []);
+    }, [reloadTable]);
 
-    // cancel add dialog modal
-    const onAddCancel = (e) => {
-        setCurrentSchema({schema: "", topic: ""});
-        console.log("closing " + e);
+    useEffect(() => {
+        setNewSchema({
+            name: schemaName,
+            description: schemaDesc,
+            topic: schemaTopic,
+        });
+    }, [schemaName, schemaDesc, schemaTopic])
+
+    // close add dialog modal
+    const handleCancelAddDialog = () => {
+        //setNewSchema({name: "", description: "", topic: ""});
+        setSchemaName("");
+        setSchemaDesc("");
+        setSchemaTopic("");
+        setDisableButton(false);
+        console.log("closing ");
     };
-    
-    const onAddSubmit = async (e) => {
+    // submit add form
+    const handleSubmitAddDialog = async (e) => {
         e.preventDefault();
+
+        console.log(`submitting form`);
+        try {
+            const res = await fetch(`/api/v1.0/schemas`, {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({data: [newSchema]})
+            });
+            if(res.status === 200) {
+                // reload table
+                // document.getElementById("insert-schema").toggle();
+                setDisableButton(true);
+                setReloadTable(reloadTable + 1);
+            } else {
+                console.log("Error " + res.status);
+            }
+        } catch(err) {
+            console.error(err);
+        }
     }
 
     return (
@@ -53,6 +102,7 @@ const ConfigureUploadSchemas = () => {
                     <tr>
                         <th scope="col">Name</th>
                         <th scope="col">Schema</th>
+                        <th scope="col">Description</th>
                         <th scope="col">Topic</th>
                         <th scope="col">Action</th>
                     </tr>
@@ -63,6 +113,7 @@ const ConfigureUploadSchemas = () => {
                         <tr key={value.schema}>
                             <td>{value.name}</td>
                             <td>{value.schema}</td>
+                            <td>{value.description}</td>
                             <td>{value.topic}</td>
                             <td align="right">
                                 {/* <button key={"btn-{value.schema}"} type="button" className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#updateSchema"
@@ -83,20 +134,26 @@ const ConfigureUploadSchemas = () => {
             <div align="right">
                 <button type="button" className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#insert-schema">Add New</button>
             </div>
-            <PopupModal id="insert-schema" title="New Upload Schema Configuration" onClose={onAddCancel}>
+            <PopupModal id="insert-schema" title="New Upload Schema Configuration" closeAction={handleCancelAddDialog}>
                 <PopupModalBody>
-                    <form id="add" onSubmit={onAddSubmit}>
-                        <div className="mb-3">
-                            <label htmlFor="schemaName" className="form-label">Schema Name</label>
-                            <input className="form-control form-control-sm" type="text" id="schemaName" placeholder="schema name" />
-                        </div>
-                        <div className="mb-3">
-                            <label htmlFor="schemaTopic" className="form-label">Import Topic</label>
-                            <input className="form-control form-control-sm" type="text" id="schemaTopic" placeholder="import topic name" />
-                        </div>
-                    </form>
+                    <Form id="add-form" submitAction={handleSubmitAddDialog}>
+                        <TextInput id="schemaName" label="Schema Name" placeholder="schema name"
+                            changeAction={(e) => {
+                                setSchemaName(e.target.value)
+                            }}></TextInput>
+                        <TextInput id="schemaDesc" label="Schema Description" placeholder="short description"
+                            changeAction={(e) => {
+                                setSchemaDesc(e.target.value)
+                            }}></TextInput>
+                        <TextInput id="schemaTopic" label="Consumer Topic" placeholder="topic name"
+                            changeAction={(e) => {
+                                setSchemaTopic(e.target.value)
+                            }}></TextInput>
+                    </Form>
                 </PopupModalBody>
-                <PopupModalButtonBar onCloseAction={onAddCancel}></PopupModalButtonBar>
+                <PopupModalButtonBar closeAction={handleCancelAddDialog}>
+                    <Button form='add-form' type="submit" disabled={disableButton}>Add</Button>
+                </PopupModalButtonBar>
             </PopupModal>
         </div>
     )
