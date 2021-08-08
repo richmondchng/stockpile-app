@@ -5,11 +5,11 @@ import PropTypes from 'prop-types';
  * @param {*} param0 
  * @returns 
  */
-const TextInput = ({id, label, placeholder, changeAction}) => {
+const TextInput = ({id, label, placeholder, value, changeAction}) => {
     return (
         <div className="mb-3">
             <label htmlFor={id} className="form-label">{label}</label>
-            <input type="text" className="form-control form-control-sm" id={id} placeholder={placeholder} onChange={changeAction} />
+            <input type="text" className="form-control form-control-sm" id={id} value={value} placeholder={placeholder} onChange={changeAction} />
         </div>
     )
 }

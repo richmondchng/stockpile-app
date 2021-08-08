@@ -7,7 +7,7 @@ import PopupModalButtonBar from './PopupModalButtonBar';
  * @param {*} param0 
  * @returns 
  */
-const PopupModal = ({id, title = 'Title', children, closeAction = () => {}}) => {
+const PopupModal = ({id, title = 'Title', children, closeAction}) => {
 
     return (
         <div className="modal fade" id={id} data-bs-backdrop="static" data-bs-keyboard="false" tabIndex="-1" aria-labelledby={`${id}_label`} aria-hidden="true">          

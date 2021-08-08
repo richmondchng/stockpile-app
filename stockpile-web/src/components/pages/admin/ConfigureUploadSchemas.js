@@ -3,6 +3,8 @@ import PageTitle from '../../common/PageTitle';
 import PopupModal from '../../common/popup/PopupModal';
 import PopupModalBody from '../../common/popup/PopupModalBody';
 import PopupModalButtonBar from '../../common/popup/PopupModalButtonBar';
+import InfoAlert from '../../common/alert/InfoAlert';
+import ErrorAlert from '../../common/alert/ErrorAlert';
 import Form from '../../common/form/Form';
 import TextInput from '../../common/form/TextInput';
 import Button from '../../common/form/Button';
@@ -13,10 +15,21 @@ import Button from '../../common/form/Button';
  */
 const ConfigureUploadSchemas = () => {
 
+    // alert
+    const [alertInfo, setAlertInfo] = useState({
+        show: false,
+        msg: "" 
+    });
+    const [alertError, setAlertError] = useState({
+        show: false,
+        msg: "" 
+    });
+
     // list of upload schemas
     const [uploadSchemas, setUploadSchemas] = useState([]);
     const [reloadTable, setReloadTable] = useState(0);
     const [disableButton, setDisableButton] = useState(false);
+
     // current selected schema
     const [schemaName, setSchemaName] = useState("");
     const [schemaDesc, setSchemaDesc] = useState("");
@@ -63,6 +76,8 @@ const ConfigureUploadSchemas = () => {
         setSchemaName("");
         setSchemaDesc("");
         setSchemaTopic("");
+        setAlertInfo({...alertInfo, show: false,});
+        setAlertError({...alertInfo, show: false,});
         setDisableButton(false);
         console.log("closing ");
     };
@@ -70,7 +85,7 @@ const ConfigureUploadSchemas = () => {
     const handleSubmitAddDialog = async (e) => {
         e.preventDefault();
 
-        console.log(`submitting form`);
+        console.log(`submitting form ${JSON.stringify(newSchema)}`);
         try {
             const res = await fetch(`/api/v1.0/schemas`, {
                 method: 'POST',
@@ -84,8 +99,17 @@ const ConfigureUploadSchemas = () => {
                 // reload table
                 // document.getElementById("insert-schema").toggle();
                 setDisableButton(true);
+                setAlertInfo({
+                    show: true,
+                    msg: "Record added"
+                });
                 setReloadTable(reloadTable + 1);
             } else {
+                const resData = await res.json();
+                setAlertError({
+                    show: true,
+                    msg: resData.message
+                });
                 console.log("Error " + res.status);
             }
         } catch(err) {
@@ -136,16 +160,18 @@ const ConfigureUploadSchemas = () => {
             </div>
             <PopupModal id="insert-schema" title="New Upload Schema Configuration" closeAction={handleCancelAddDialog}>
                 <PopupModalBody>
+                    <InfoAlert show={alertInfo.show}>{alertInfo.msg}</InfoAlert>
+                    <ErrorAlert show={alertError.show}>{alertError.msg}</ErrorAlert>
                     <Form id="add-form" submitAction={handleSubmitAddDialog}>
-                        <TextInput id="schemaName" label="Schema Name" placeholder="schema name"
+                        <TextInput id="schemaName" label="Schema Name" placeholder="schema name" value={schemaName}
                             changeAction={(e) => {
                                 setSchemaName(e.target.value)
                             }}></TextInput>
-                        <TextInput id="schemaDesc" label="Schema Description" placeholder="short description"
+                        <TextInput id="schemaDesc" label="Schema Description" placeholder="short description" value={schemaDesc}
                             changeAction={(e) => {
                                 setSchemaDesc(e.target.value)
                             }}></TextInput>
-                        <TextInput id="schemaTopic" label="Consumer Topic" placeholder="topic name"
+                        <TextInput id="schemaTopic" label="Consumer Topic" placeholder="topic name" value={schemaTopic}
                             changeAction={(e) => {
                                 setSchemaTopic(e.target.value)
                             }}></TextInput>
