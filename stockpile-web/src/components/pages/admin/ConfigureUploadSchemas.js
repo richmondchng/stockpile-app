@@ -1,49 +1,15 @@
 import { useState, useEffect } from 'react'
 import PageTitle from '../../common/PageTitle';
-import PopupModal from '../../common/popup/PopupModal';
-import PopupModalBody from '../../common/popup/PopupModalBody';
-import PopupModalButtonBar from '../../common/popup/PopupModalButtonBar';
-import InfoAlert from '../../common/alert/InfoAlert';
-import ErrorAlert from '../../common/alert/ErrorAlert';
-import Form from '../../common/form/Form';
-import TextInput from '../../common/form/TextInput';
-import Button from '../../common/form/Button';
+import ImportSchemaModal from '../../features/importer/ImportSchemaModal';
 
 /**
  * Screen to view and configure upload schema.
  * @returns function
  */
 const ConfigureUploadSchemas = () => {
-
-    // alert
-    const [alertInfo, setAlertInfo] = useState({
-        show: false,
-        msg: "" 
-    });
-    const [alertError, setAlertError] = useState({
-        show: false,
-        msg: "" 
-    });
-
     // list of upload schemas
     const [uploadSchemas, setUploadSchemas] = useState([]);
     const [reloadTable, setReloadTable] = useState(0);
-    const [disableButton, setDisableButton] = useState(false);
-
-    // current selected schema
-    const [schemaName, setSchemaName] = useState("");
-    const [schemaDesc, setSchemaDesc] = useState("");
-    const [schemaTopic, setSchemaTopic] = useState("");
-    const [newSchema, setNewSchema] = useState({
-        name: schemaName,
-        description: schemaDesc,
-        topic: schemaTopic,
-    });
-    // const [currentSchema, setCurrentSchema] = useState({
-    //     name: schemaName,
-    //     description: schemaDesc,
-    //     topic: schemaTopic,
-    // });
 
     // get list of upload schemas to populate table
     useEffect(() => {
@@ -61,61 +27,6 @@ const ConfigureUploadSchemas = () => {
         };
         getUploadSchemas();
     }, [reloadTable]);
-
-    useEffect(() => {
-        setNewSchema({
-            name: schemaName,
-            description: schemaDesc,
-            topic: schemaTopic,
-        });
-    }, [schemaName, schemaDesc, schemaTopic])
-
-    // close add dialog modal
-    const handleCancelAddDialog = () => {
-        //setNewSchema({name: "", description: "", topic: ""});
-        setSchemaName("");
-        setSchemaDesc("");
-        setSchemaTopic("");
-        setAlertInfo({...alertInfo, show: false,});
-        setAlertError({...alertInfo, show: false,});
-        setDisableButton(false);
-        console.log("closing ");
-    };
-    // submit add form
-    const handleSubmitAddDialog = async (e) => {
-        e.preventDefault();
-
-        console.log(`submitting form ${JSON.stringify(newSchema)}`);
-        try {
-            const res = await fetch(`/api/v1.0/schemas`, {
-                method: 'POST',
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({data: [newSchema]})
-            });
-            if(res.status === 200) {
-                // reload table
-                // document.getElementById("insert-schema").toggle();
-                setDisableButton(true);
-                setAlertInfo({
-                    show: true,
-                    msg: "Record added"
-                });
-                setReloadTable(reloadTable + 1);
-            } else {
-                const resData = await res.json();
-                setAlertError({
-                    show: true,
-                    msg: resData.message
-                });
-                console.log("Error " + res.status);
-            }
-        } catch(err) {
-            console.error(err);
-        }
-    }
 
     return (
         <div>
@@ -158,29 +69,9 @@ const ConfigureUploadSchemas = () => {
             <div align="right">
                 <button type="button" className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#insert-schema">Add New</button>
             </div>
-            <PopupModal id="insert-schema" title="New Upload Schema Configuration" closeAction={handleCancelAddDialog}>
-                <PopupModalBody>
-                    <InfoAlert show={alertInfo.show}>{alertInfo.msg}</InfoAlert>
-                    <ErrorAlert show={alertError.show}>{alertError.msg}</ErrorAlert>
-                    <Form id="add-form" submitAction={handleSubmitAddDialog}>
-                        <TextInput id="schemaName" label="Schema Name" placeholder="schema name" value={schemaName}
-                            changeAction={(e) => {
-                                setSchemaName(e.target.value)
-                            }}></TextInput>
-                        <TextInput id="schemaDesc" label="Schema Description" placeholder="short description" value={schemaDesc}
-                            changeAction={(e) => {
-                                setSchemaDesc(e.target.value)
-                            }}></TextInput>
-                        <TextInput id="schemaTopic" label="Consumer Topic" placeholder="topic name" value={schemaTopic}
-                            changeAction={(e) => {
-                                setSchemaTopic(e.target.value)
-                            }}></TextInput>
-                    </Form>
-                </PopupModalBody>
-                <PopupModalButtonBar closeAction={handleCancelAddDialog}>
-                    <Button form='add-form' type="submit" disabled={disableButton}>Add</Button>
-                </PopupModalButtonBar>
-            </PopupModal>
+            <ImportSchemaModal id="insert-schema" title="New Upload Schema Configuration" 
+                postSubmitAction={() => {setReloadTable(reloadTable + 1)}}
+                ></ImportSchemaModal>
         </div>
     )
 }
