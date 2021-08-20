@@ -66,10 +66,10 @@ const ConfigureUploadSchemas = () => {
                         )
                     })}
                 </tbody>
+                <tfoot>
+                    <tr><td colSpan="5" align="right"><ModalOpenButton target="insert-schema">Add New</ModalOpenButton></td></tr>
+                </tfoot>
             </table>
-            <div align="right">
-                <ModalOpenButton target="insert-schema">Add New</ModalOpenButton>
-            </div>
             <ImportSchemaModal id="insert-schema" title="New Upload Schema Configuration" 
                 postSubmitAction={() => {setReloadTable(reloadTable + 1)}}></ImportSchemaModal>
             <ImportSchemaModal id="update-schema" title="Update Upload Schema Configuration" 
