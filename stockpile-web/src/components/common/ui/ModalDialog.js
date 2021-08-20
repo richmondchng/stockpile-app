@@ -46,6 +46,21 @@ ModalButtonBar.propTypes = {
 }
 
 /**
+ * Button to open modal
+ * @param {*} param0 
+ * @returns 
+ */
+const ModalOpenButton = ({target, children, clickAction}) => {
+    return (
+        <button type="button" className="btn btn-primary" data-bs-toggle="modal" data-bs-target={`#${target}`} onClick={clickAction}>{children}</button>
+    )
+}
+ModalOpenButton.propTypes = {
+    children: PropTypes.node.isRequired,
+    clickAction: PropTypes.func
+}
+
+/**
  * Popup dialog modal box.
  * @param {*} param0 
  * @returns 
@@ -92,5 +107,6 @@ Modal.defaultProps = {
 export { 
     Modal,
     ModalBody,
-    ModalButtonBar
+    ModalButtonBar,
+    ModalOpenButton
 }

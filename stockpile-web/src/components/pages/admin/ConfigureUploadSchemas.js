@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react'
 import PageTitle from '../../common/PageTitle';
 import ImportSchemaModal from '../../features/importer/ImportSchemaModal';
+import { ModalOpenButton } from '../../common/ui/ModalDialog';
+import { Button } from '../../common/form/FormInputs';
 
 /**
  * Screen to view and configure upload schema.
@@ -56,15 +58,9 @@ const ConfigureUploadSchemas = () => {
                             <td>{value.description}</td>
                             <td>{value.topic}</td>
                             <td align="right">
-                                <button type="button" className="btn btn-primary" data-bs-toggle="modal" 
-                                    data-bs-target="#update-schema"
-                                    onClick={() => {setCurrentData(value)}}>
-                                    <i className="bi bi-pencil-square"></i>
-                                </button>
+                                <ModalOpenButton target="update-schema" clickAction={() => {setCurrentData(value)}}><i className="bi bi-pencil-square"></i></ModalOpenButton>
                                 &nbsp;
-                                <button type="button" className="btn btn-primary">                                    
-                                    <i className="bi bi-trash"></i>
-                                </button>
+                                <Button ><i className="bi bi-trash"></i></Button>
                             </td>
                         </tr>
                         )
@@ -72,15 +68,13 @@ const ConfigureUploadSchemas = () => {
                 </tbody>
             </table>
             <div align="right">
-                <button type="button" className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#insert-schema">Add New</button>
+                <ModalOpenButton target="insert-schema">Add New</ModalOpenButton>
             </div>
             <ImportSchemaModal id="insert-schema" title="New Upload Schema Configuration" 
-                postSubmitAction={() => {setReloadTable(reloadTable + 1)}}
-                ></ImportSchemaModal>
+                postSubmitAction={() => {setReloadTable(reloadTable + 1)}}></ImportSchemaModal>
             <ImportSchemaModal id="update-schema" title="Update Upload Schema Configuration" 
                 currentData={currentData}
-                postSubmitAction={() => {setReloadTable(reloadTable + 1)}}
-                ></ImportSchemaModal>
+                postSubmitAction={() => {setReloadTable(reloadTable + 1)}}></ImportSchemaModal>
         </div>
     )
 }
