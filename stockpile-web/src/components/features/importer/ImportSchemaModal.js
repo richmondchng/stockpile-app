@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Modal, ModalBody, ModalButtonBar } from '../../common/ui/ModalDialog';
 import { InfoAlert, ErrorAlert } from '../../common/ui/Alerts'
@@ -10,11 +10,18 @@ import { TextInput, Button } from '../../common/form/FormInputs';
  * @param {*} param0 
  * @returns 
  */
-const ImportSchemaModal = ({id, title, postSubmitAction, postCancelAction}) => {
+const ImportSchemaModal = ({id, title, currentData, postSubmitAction, postCancelAction}) => {
+    let update = currentData.schema;
+    let method = update ? 'PUT' : 'POST';
+    let action = update ? `/api/v1.0/schemas/${currentData.schema}` : `/api/v1.0/schemas`;
+    let buttonLabel = update ? 'Update' : 'Add';
+    let formId = `${id}-form`;
+    let successMessage = update ? 'Record updated' : 'Record added';
+
     // alert
     const [alertInfo, setAlertInfo] = useState({
         show: false,
-        msg: "" 
+        msg: successMessage
     });
     const [alertError, setAlertError] = useState({
         show: false,
@@ -28,24 +35,32 @@ const ImportSchemaModal = ({id, title, postSubmitAction, postCancelAction}) => {
         description: "",
         topic: ""
     });
+    useEffect(() => {
+        setModalData({
+            name: currentData.name ? currentData.name : '',
+            description: currentData.description ? currentData.description : '',
+            topic: currentData.topic ? currentData.topic : '',
+            schema: currentData.schema ? currentData.schema : ''
+        });
+    }, [currentData]);
 
     // close modal
     const handleCancelDialog = () => {
         setModalData({name: "", description: "", topic: ""});
         setAlertInfo({...alertInfo, show: false,});
-        setAlertError({...alertInfo, show: false,});
+        setAlertError({...alertError, show: false,});
         setDisableButton(false);
-        console.log("closing ");
+        console.log("closing");
         postCancelAction();
     };
     // submit form
     const handleSubmitDialog = async (e) => {
         e.preventDefault();
 
-        console.log(`submitting form ${JSON.stringify(modalData)}`);
+        console.log(`submitting form ${JSON.stringify(modalData)} ${method} ${action}`);
         try {
-            const res = await fetch(`/api/v1.0/schemas`, {
-                method: 'POST',
+            const res = await fetch(action, {
+                method: method,
                 headers: {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json'
@@ -56,19 +71,24 @@ const ImportSchemaModal = ({id, title, postSubmitAction, postCancelAction}) => {
                 // reload table
                 setDisableButton(true);
                 setAlertInfo({
-                    show: true,
-                    msg: "Record added"
+                    ...alertInfo,
+                    show: true
                 });
                 postSubmitAction();
             } else {
+                //console.log("Error " + res.status);
                 const resData = await res.json();
+                console.log("Error " + res.status + " " +  JSON.stringify(resData));
                 setAlertError({
                     show: true,
                     msg: resData.message
                 });
-                console.log("Error " + res.status);
             }
         } catch(err) {
+            // setAlertError({
+            //     show: true,
+            //     msg: err
+            // });
             console.error(err);
         }
     }
@@ -78,11 +98,14 @@ const ImportSchemaModal = ({id, title, postSubmitAction, postCancelAction}) => {
             <ModalBody>
                 <InfoAlert show={alertInfo.show}>{alertInfo.msg}</InfoAlert>
                 <ErrorAlert show={alertError.show}>{alertError.msg}</ErrorAlert>
-                <Form id="add-form" submitAction={handleSubmitDialog}>
+                <Form id={formId} submitAction={handleSubmitDialog}>
                     <TextInput id="schemaName" label="Schema Name" placeholder="schema name" value={modalData.name}
                         changeAction={(e) => {
                             setModalData({...modalData, name: e.target.value})
                         }}></TextInput>
+                    {modalData.schema && 
+                        <TextInput id="schemaSchema" label="Resource" value={modalData.schema} readOnly={true} />
+                    }
                     <TextInput id="schemaDesc" label="Schema Description" placeholder="short description" value={modalData.description}
                         changeAction={(e) => {
                             setModalData({...modalData, description: e.target.value})
@@ -93,8 +116,8 @@ const ImportSchemaModal = ({id, title, postSubmitAction, postCancelAction}) => {
                         }}></TextInput>
                 </Form>
             </ModalBody>
-            <ModalButtonBar closeAction={handleCancelDialog}>
-                <Button form='add-form' type="submit" disabled={disableButton}>Add</Button>
+            <ModalButtonBar modalId={formId} closeAction={handleCancelDialog}>
+                <Button id={`${formId}-submit-btn`} form={formId} type="submit" disabled={disableButton}>{buttonLabel}</Button>
             </ModalButtonBar>
         </Modal>
     )
@@ -105,13 +128,19 @@ ImportSchemaModal.propTypes = {
     id: PropTypes.string.isRequired,
     title: PropTypes.string,
     postSubmitAction: PropTypes.func,
-    postCancelAction: PropTypes.func
+    postCancelAction: PropTypes.func,
+    currentData : PropTypes.object,
 }
 // default props
 ImportSchemaModal.defaultProps = {
     title: "Modal",
     postSubmitAction: () => {},
-    postCancelAction: () => {}
+    postCancelAction: () => {},
+    currentData: {
+        name: "",
+        description: "",
+        topic: ""
+    }
 }
 
 export default ImportSchemaModal

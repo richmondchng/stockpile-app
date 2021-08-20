@@ -10,6 +10,11 @@ const ConfigureUploadSchemas = () => {
     // list of upload schemas
     const [uploadSchemas, setUploadSchemas] = useState([]);
     const [reloadTable, setReloadTable] = useState(0);
+    const [currentData, setCurrentData] = useState({
+        name: "",
+        description: "",
+        topic: ""
+    });
 
     // get list of upload schemas to populate table
     useEffect(() => {
@@ -51,11 +56,11 @@ const ConfigureUploadSchemas = () => {
                             <td>{value.description}</td>
                             <td>{value.topic}</td>
                             <td align="right">
-                                {/* <button key={"btn-{value.schema}"} type="button" className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#updateSchema"
-                                    onClick={() => {onEditClick(value)}
-                                    }>
+                                <button type="button" className="btn btn-primary" data-bs-toggle="modal" 
+                                    data-bs-target="#update-schema"
+                                    onClick={() => {setCurrentData(value)}}>
                                     <i className="bi bi-pencil-square"></i>
-                                </button> */}
+                                </button>
                                 &nbsp;
                                 <button type="button" className="btn btn-primary">                                    
                                     <i className="bi bi-trash"></i>
@@ -70,6 +75,10 @@ const ConfigureUploadSchemas = () => {
                 <button type="button" className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#insert-schema">Add New</button>
             </div>
             <ImportSchemaModal id="insert-schema" title="New Upload Schema Configuration" 
+                postSubmitAction={() => {setReloadTable(reloadTable + 1)}}
+                ></ImportSchemaModal>
+            <ImportSchemaModal id="update-schema" title="Update Upload Schema Configuration" 
+                currentData={currentData}
                 postSubmitAction={() => {setReloadTable(reloadTable + 1)}}
                 ></ImportSchemaModal>
         </div>

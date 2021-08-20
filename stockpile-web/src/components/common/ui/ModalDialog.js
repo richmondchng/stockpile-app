@@ -23,15 +23,16 @@ ModalBody.propTypes = {
  * @param {*} param0 
  * @returns ModalButtonBar
  */
-const ModalButtonBar = ({children, closeAction}) => {
+const ModalButtonBar = ({modalId, children, closeAction}) => {
     return (
         <div className="modal-footer">
-            <button type="button" className="btn btn-secondary" data-bs-dismiss="modal" onClick={closeAction}>Close</button>
+            <button id={`${modalId}-cancel-btn`} type="button" className="btn btn-secondary" data-bs-dismiss="modal" onClick={closeAction}>Close</button>
             {children}
         </div>
     )
 }
 ModalButtonBar.propTypes = {
+    modalId: PropTypes.string.isRequired,
     children: PropTypes.oneOfType([
         PropTypes.shape({
             type: PropTypes.oneOf([Button])
