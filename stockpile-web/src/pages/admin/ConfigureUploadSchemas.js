@@ -1,15 +1,17 @@
 import { useState, useEffect } from 'react'
 import PageTitle from '../../components/ui/PageTitle';
 import ImportSchemaModal from '../../components/features/importer/ImportSchemaModal';
-import { ModalOpenButton } from '../../components/ui/ModalDialog';
-import { Button } from '../../components/ui/form/FormInputs';
 import { InfoAlert, ErrorAlert } from '../../components/ui/Alerts';
+
+import Button from '../../components/ui/form/Button';
 
 /**
  * Screen to view and configure upload schema.
  * @returns function
  */
 const ConfigureUploadSchemas = () => {
+    const [showAdd, setShowAdd] = useState(false);
+
     // list of upload schemas
     const [uploadSchemas, setUploadSchemas] = useState([]);
     const [reloadTable, setReloadTable] = useState(0);
@@ -38,7 +40,7 @@ const ConfigureUploadSchemas = () => {
                     const jsonData = await response.json();
                     console.log("get available schemas " + jsonData);
                     setUploadSchemas(jsonData.data);
-                } else if(response.status == 204) {
+                } else if(response.status === 204) {
                     // no data
                     console.log("no available schemas ");
                     setUploadSchemas([]);
@@ -113,23 +115,29 @@ const ConfigureUploadSchemas = () => {
                             <td>{value.description}</td>
                             <td>{value.topic}</td>
                             <td align="right">
-                                <ModalOpenButton target="update-schema" onClick={() => {setCurrentData(value)}}><i className="bi bi-pencil-square"></i></ModalOpenButton>
+                                {/* <ModalOpenButton target="update-schema" onClick={() => {setCurrentData(value)}}><i className="bi bi-pencil-square"></i></ModalOpenButton>
                                 &nbsp;
-                                <Button onClick={() => {deleteImportSchemaDetails(value)}}><i className="bi bi-trash"></i></Button>
+                                <Button onClick={() => {deleteImportSchemaDetails(value)}}><i className="bi bi-trash"></i></Button> */}
                             </td>
                         </tr>
                         )
                     })}
                 </tbody>
                 <tfoot>
-                    <tr><td colSpan="5" align="right"><ModalOpenButton target="insert-schema">Add New</ModalOpenButton></td></tr>
+                    <tr><td colSpan="5" align="right">
+                        <Button onClick={() => setShowAdd(true)}>Add New</Button>
+                    </td></tr>
                 </tfoot>
             </table>
-            <ImportSchemaModal id="insert-schema" title="New Upload Schema Configuration" 
-                postSubmitAction={() => {setReloadTable(reloadTable + 1)}}></ImportSchemaModal>
-            <ImportSchemaModal id="update-schema" title="Update Upload Schema Configuration" 
+            <ImportSchemaModal id="insert-schema" title="New Upload Schema Configuration" show={showAdd}
+                postSubmitAction={() => {
+                    setReloadTable(reloadTable + 1);
+                    setShowAdd(false);
+                }}
+                postCancelAction={() => setShowAdd(false)}></ImportSchemaModal>
+            {/* <ImportSchemaModal id="update-schema" title="Update Upload Schema Configuration" 
                 currentData={currentData}
-                postSubmitAction={() => {setReloadTable(reloadTable + 1)}}></ImportSchemaModal>
+                postSubmitAction={() => {setReloadTable(reloadTable + 1)}}></ImportSchemaModal> */}
         </div>
     )
 }

@@ -7,13 +7,13 @@ import { getComponentId } from '../../utility/Util';
  * @param {*} param0 
  * @returns 
  */
- const Button = ({id, form, type, label, disabled, children, onClick}) => {
+ const Button = ({id, form, type, label, variant, disabled, children, onClick}) => {
     const buttonLabel = children ? children : label;
     const idValue = getComponentId(id);
 
     return (
         // <button type={type} form={form} id={idValue} className={`btn btn-primary ${className}`} onClick={onClick} disabled={disabled}>{buttonLabel}</button>
-        <BButton variant="dark" type={type} form={form} id={idValue} onClick={onClick} disabled={disabled}>{buttonLabel}</BButton>
+        <BButton variant={variant} type={type} form={form} id={idValue} onClick={onClick} disabled={disabled}>{buttonLabel}</BButton>
     )
 }
 Button.propTypes = {
@@ -28,6 +28,7 @@ Button.propTypes = {
 Button.defaultProps = {
     type: 'button',
     label: 'Button',
+    variant: 'dark',
     disabled: false
 }
 
