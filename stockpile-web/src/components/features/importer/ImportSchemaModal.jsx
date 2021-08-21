@@ -131,7 +131,7 @@ const ImportSchemaModal = ({id, title, show, currentData, postSubmitAction, post
         // </Modal>
         <Modal title={title} show={show} closeAction={handleCancelDialog}>
             <ModalBody>
-                <Alert show={showError.show} variant="danger" onClose={() => {setShowError({...showError, show: false})}}>{showError.msg}</Alert>
+                <Alert show={showError.show} title="Error" variant="danger" onClose={() => {setShowError({...showError, show: false})}}>{showError.msg}</Alert>
                 <Form id={formId} onSubmit={handleSubmitDialog}>
                      <TextInput id="schemaName" label="Schema Name" placeholder="schema name" value={modalData.name}
                          changeAction={(e) => {

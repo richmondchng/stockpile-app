@@ -7,10 +7,10 @@ import _Alert from 'react-bootstrap/Alert';
  * @returns 
  */
 const Alert = ({show, variant, onClose, title, children}) => {
-    let heading = title ? <_Alert.Heading>{title}</_Alert.Heading> : {}
+    let heading = title ? <_Alert.Heading>{title}</_Alert.Heading> : '';
     return (
         <_Alert variant={variant} show={show} onClose={onClose} dismissible>
-            {/* {heading} */}
+            {heading}
             {children}
         </_Alert>
     )
