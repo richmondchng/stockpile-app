@@ -1,15 +1,12 @@
 import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-//import { Modal, ModalBody, ModalButtonBar } from '../../ui/ModalDialog';
-import { InfoAlert, ErrorAlert } from '../../ui/Alerts'
-
-//import { TextInput, Button } from '../../ui/form/FormInputs';
 import Modal from '../../ui/modal/Modal';
 import ModalBody from '../../ui/modal/ModalBody';
 import ModalFooter from '../../ui/modal/ModalFooter';
 import Form from '../../ui/form/Form';
 import Button from '../../ui/form/Button';
 import TextInput from '../../ui/form/TextInput';
+import Alert from '../../ui/notification/Alert';
 
 /**
  * Import schema pop up dialog box
@@ -24,7 +21,6 @@ const ImportSchemaModal = ({id, title, show, currentData, postSubmitAction, post
     let formId = `${id}-form`;
 
     // let successMessage = update ? 'Record updated' : 'Record added';
-
     // // alert
     // const [alertInfo, setAlertInfo] = useState({
     //     show: false,
@@ -36,6 +32,11 @@ const ImportSchemaModal = ({id, title, show, currentData, postSubmitAction, post
     // });
 
     const [disableButton, setDisableButton] = useState(false);
+    const [showError, setShowError] = useState({
+        show: false,
+        msg: ""
+    });
+
     // form data
     const [modalData, setModalData] = useState({
         name: "",
@@ -54,9 +55,7 @@ const ImportSchemaModal = ({id, title, show, currentData, postSubmitAction, post
     // close modal
     const handleCancelDialog = () => {
         setModalData({name: "", description: "", topic: ""});
-        // setAlertInfo({...alertInfo, show: false,});
-        // setAlertError({...alertError, show: false,});
-        // setDisableButton(false);
+        setShowError({...showError, show: false,});
         console.log("closing");
         postCancelAction();
     };
@@ -88,10 +87,11 @@ const ImportSchemaModal = ({id, title, show, currentData, postSubmitAction, post
                 //console.log("Error " + res.status);
                 const resData = await res.json();
                 console.log("Error " + res.status + " " +  JSON.stringify(resData));
-                // setAlertError({
-                //     show: true,
-                //     msg: resData.message
-                // });
+                console.log("Error " + res.status + " " +  resData.message);
+                setShowError({
+                    show: true,
+                    msg: resData.message
+                });
             }
         } catch(err) {
             // setAlertError({
@@ -131,6 +131,7 @@ const ImportSchemaModal = ({id, title, show, currentData, postSubmitAction, post
         // </Modal>
         <Modal title={title} show={show} closeAction={handleCancelDialog}>
             <ModalBody>
+                <Alert show={showError.show} variant="danger" onClose={() => {setShowError({...showError, show: false})}}>{showError.msg}</Alert>
                 <Form id={formId} onSubmit={handleSubmitDialog}>
                      <TextInput id="schemaName" label="Schema Name" placeholder="schema name" value={modalData.name}
                          changeAction={(e) => {
