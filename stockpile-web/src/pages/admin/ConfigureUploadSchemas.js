@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import PageTitle from '../../components/common/PageTitle';
+import PageTitle from '../../components/common/ui/PageTitle';
 import ImportSchemaModal from '../../components/features/importer/ImportSchemaModal';
 import { ModalOpenButton } from '../../components/common/ui/ModalDialog';
 import { Button } from '../../components/common/form/FormInputs';

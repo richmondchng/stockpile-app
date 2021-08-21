@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import PageTitle from '../../components/common/PageTitle';
+import PageTitle from '../../components/common/ui/PageTitle';
 import Form from '../../components/common/form/Form';
 import DropdownInput from '../../components/common/form/DropdownInput';
 import FileInput from '../../components/common/form/FileInput';
