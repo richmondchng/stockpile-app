@@ -1,15 +1,19 @@
 import { useState, useEffect } from 'react'
 import PageTitle from '../../components/common/PageTitle';
+import Form from '../../components/common/form/Form';
+import DropdownInput from '../../components/common/form/DropdownInput';
+import FileInput from '../../components/common/form/FileInput';
+import Button from '../../components/common/form/Button';
 
 /**
  * Data import screen
  * @returns 
  */
 const DataImport = () => {
+    const [disableButton, setDisableButton] = useState(false);
     const [file, setFile] = useState('');
     const [schema, setSchema] = useState('');
     const [uploadSchemas, setUploadSchemas] = useState([]);
-
     // file to submit
     const [fileName, setFileName] = useState('Choose file');
 
@@ -25,7 +29,10 @@ const DataImport = () => {
                 if(response.status === 200) {
                     const jsonData = await response.json();
                     //console.log(jsonData.data);
-                    setUploadSchemas(jsonData.data);
+                    setUploadSchemas(jsonData.data.map((value) => {
+                        return { key: value.schema, value : value.name};
+                    }));
+                    // setUploadSchemas(jsonData.data);
                 }
             } catch(err) {
                 console.error(err);
@@ -51,6 +58,7 @@ const DataImport = () => {
         formData.append('file', file);
         console.log(`Uploading file to ${schema}`)
         try {
+            setDisableButton(true);
             const res = await fetch(`/api/v1.0/schemas/${schema}`, {
                 method: 'POST',
                 body: formData
@@ -65,30 +73,21 @@ const DataImport = () => {
             }
         } catch(err) {
             console.error(err);
+        } finally {
+            setDisableButton(false);
         }
     }
 
     return (
         <div>
             <PageTitle>Data Import</PageTitle>
-            <form onSubmit={onSubmit}>
-                <div className="mb-3">
-                    <label htmlFor="schema" className="form-label">Upload Schema</label>
-                    <select className="form-select form-select-sm mb-3" aria-label=".form-select-sm example" 
-                        id="schema" defaultValue="blank" onChange={v => {setSchema(v.target.value)}}>
-                            <option key="blank">Choose upload schema</option>
-                            {uploadSchemas && uploadSchemas.length && uploadSchemas.map((value) => {
-                                return <option key={value.schema} value={value.schema}>{value.name}</option>
-                            })}
-                    </select>
-                </div>
-                <div className="mb-3">
-                    <label htmlFor="formFile" className="form-label">Upload File (CSV)</label>
-                    <input className="form-control form-control-sm" type="file" id="formFile" placeholder={fileName}
-                        onChange={onChange} />
-                </div>
-                <input type="submit" className="btn btn-dark btn-block btn-sm" value="Import Data" />
-            </form>
+            <Form onSubmit={onSubmit}>
+                <DropdownInput id="schema" placeholder="Select an import schema" label="Upload Schema" 
+                    data={uploadSchemas} onChange={v => {setSchema(v.target.value)}}></DropdownInput>
+                <FileInput id="formFile" label="Upload File (CSV)" placeholder={fileName}
+                        onChange={onChange}></FileInput>
+                <Button type="submit" disabled={disableButton}>Import Data</Button>
+            </Form>
         </div>
     );
 };
