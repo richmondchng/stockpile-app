@@ -107,18 +107,18 @@ const ImportSchemaModal = ({idx, title, show, currentData, postSubmitAction, pos
                 <Alert show={showError.show} title="Error" variant="danger" onClose={() => {setShowError({...showError, show: false})}}>{showError.msg}</Alert>
                 <Form idx={formId} onSubmit={handleSubmitDialog}>
                      <TextInput idx="schemaName" label="Schema Name" placeholder="schema name" value={modalData.name}
-                         changeAction={(e) => {
+                         onChange={(e) => {
                              setModalData({...modalData, name: e.target.value})
                          }}></TextInput>
                      {modalData.schema && 
                          <TextInput idx="schemaSchema" label="Resource" value={modalData.schema} readOnly={true} />
                      }
                      <TextInput idx="schemaDesc" label="Schema Description" placeholder="short description" value={modalData.description}
-                        changeAction={(e) => {
+                        onChange={(e) => {
                              setModalData({...modalData, description: e.target.value})
                          }}></TextInput>
                      <TextInput idx="schemaTopic" label="Consumer Topic" placeholder="topic name" value={modalData.topic}
-                         changeAction={(e) => {
+                         onChange={(e) => {
                              setModalData({...modalData, topic: e.target.value})
                          }}></TextInput>
                 </Form>
