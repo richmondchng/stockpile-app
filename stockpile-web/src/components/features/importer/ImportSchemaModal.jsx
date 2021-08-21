@@ -103,32 +103,6 @@ const ImportSchemaModal = ({id, title, show, currentData, postSubmitAction, post
     }
 
     return (
-        // <Modal id={id} title={title} closeAction={handleCancelDialog}>
-        //     <ModalBody>
-        //         <InfoAlert show={alertInfo.show}>{alertInfo.msg}</InfoAlert>
-        //         <ErrorAlert show={alertError.show}>{alertError.msg}</ErrorAlert>
-        //         <Form id={formId} submitAction={handleSubmitDialog}>
-        //             <TextInput id="schemaName" label="Schema Name" placeholder="schema name" value={modalData.name}
-        //                 changeAction={(e) => {
-        //                     setModalData({...modalData, name: e.target.value})
-        //                 }}></TextInput>
-        //             {modalData.schema && 
-        //                 <TextInput id="schemaSchema" label="Resource" value={modalData.schema} readOnly={true} />
-        //             }
-        //             <TextInput id="schemaDesc" label="Schema Description" placeholder="short description" value={modalData.description}
-        //                 changeAction={(e) => {
-        //                     setModalData({...modalData, description: e.target.value})
-        //                 }}></TextInput>
-        //             <TextInput id="schemaTopic" label="Consumer Topic" placeholder="topic name" value={modalData.topic}
-        //                 changeAction={(e) => {
-        //                     setModalData({...modalData, topic: e.target.value})
-        //                 }}></TextInput>
-        //         </Form>
-        //     </ModalBody>
-        //     <ModalButtonBar modalId={formId} closeAction={handleCancelDialog}>
-        //         <Button id={`${formId}-submit-btn`} form={formId} type="submit" disabled={disableButton}>{buttonLabel}</Button>
-        //     </ModalButtonBar>
-        // </Modal>
         <Modal title={title} show={show} closeAction={handleCancelDialog}>
             <ModalBody>
                 <Alert show={showError.show} title="Error" variant="danger" onClose={() => {setShowError({...showError, show: false})}}>{showError.msg}</Alert>

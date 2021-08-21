@@ -11,6 +11,7 @@ import Button from '../../components/ui/form/Button';
  */
 const ConfigureUploadSchemas = () => {
     const [showAdd, setShowAdd] = useState(false);
+    const [showUpdate, setShowUpdate] = useState(false);
 
     // list of upload schemas
     const [uploadSchemas, setUploadSchemas] = useState([]);
@@ -20,15 +21,15 @@ const ConfigureUploadSchemas = () => {
         description: "",
         topic: ""
     });
-    // alert
-    const [alertInfo, setAlertInfo] = useState({
-        show: false,
-        msg: ""
-    });
-    const [alertError, setAlertError] = useState({
-        show: false,
-        msg: "" 
-    });
+    // // alert
+    // const [alertInfo, setAlertInfo] = useState({
+    //     show: false,
+    //     msg: ""
+    // });
+    // const [alertError, setAlertError] = useState({
+    //     show: false,
+    //     msg: "" 
+    // });
 
     // get list of upload schemas to populate table
     useEffect(() => {
@@ -66,19 +67,19 @@ const ConfigureUploadSchemas = () => {
                 });
                 if(res.status === 200) {
                     // reload table
-                    setAlertInfo({
-                        msg: 'Record deleted',
-                        show: true
-                    });
+                    // setAlertInfo({
+                    //     msg: 'Record deleted',
+                    //     show: true
+                    // });
                     setReloadTable(reloadTable + 1);
                 } else {
                     //console.log("Error " + res.status);
                     const resData = await res.json();
                     console.log("Error " + res.status + " " +  JSON.stringify(resData));
-                    setAlertError({
-                        show: true,
-                        msg: resData.message
-                    });
+                    // setAlertError({
+                    //     show: true,
+                    //     msg: resData.message
+                    // });
                 }
             } catch(err) {
                 // setAlertError({
@@ -93,8 +94,8 @@ const ConfigureUploadSchemas = () => {
     return (
         <div>
             <PageTitle>Configure Upload Schemas</PageTitle>
-            <InfoAlert show={alertInfo.show}>{alertInfo.msg}</InfoAlert>
-            <ErrorAlert show={alertError.show}>{alertError.msg}</ErrorAlert>
+            {/* <InfoAlert show={alertInfo.show}>{alertInfo.msg}</InfoAlert>
+            <ErrorAlert show={alertError.show}>{alertError.msg}</ErrorAlert> */}
             <table className="table caption-top table-bordered table-striped table-hover">
                 <caption>List of upload schema</caption>
                 <thead>
@@ -115,9 +116,11 @@ const ConfigureUploadSchemas = () => {
                             <td>{value.description}</td>
                             <td>{value.topic}</td>
                             <td align="right">
-                                {/* <ModalOpenButton target="update-schema" onClick={() => {setCurrentData(value)}}><i className="bi bi-pencil-square"></i></ModalOpenButton>
-                                &nbsp;
-                                <Button onClick={() => {deleteImportSchemaDetails(value)}}><i className="bi bi-trash"></i></Button> */}
+                                <Button onClick={() => setShowUpdate(true)} onClick={() => {
+                                    setCurrentData(value);
+                                    setShowUpdate(true);
+                                }}><i className="bi bi-pencil-square"></i></Button> {' '}
+                                <Button onClick={() => {deleteImportSchemaDetails(value)}}><i className="bi bi-trash"></i></Button>
                             </td>
                         </tr>
                         )
@@ -135,9 +138,13 @@ const ConfigureUploadSchemas = () => {
                     setShowAdd(false);
                 }}
                 postCancelAction={() => setShowAdd(false)}></ImportSchemaModal>
-            {/* <ImportSchemaModal id="update-schema" title="Update Upload Schema Configuration" 
+            <ImportSchemaModal id="update-schema" title="Update Upload Schema Configuration" show={showUpdate}
                 currentData={currentData}
-                postSubmitAction={() => {setReloadTable(reloadTable + 1)}}></ImportSchemaModal> */}
+                postSubmitAction={() => {
+                    setReloadTable(reloadTable + 1);
+                    setShowUpdate(false);
+                }}
+                postCancelAction={() => setShowUpdate(false)}></ImportSchemaModal>
         </div>
     )
 }
