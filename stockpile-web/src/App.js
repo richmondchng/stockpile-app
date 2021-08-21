@@ -1,11 +1,11 @@
 import './App.css';
 import { Route, Switch, BrowserRouter as Router } from 'react-router-dom';
-import Navigation from './components/pages/common/Navigation';
-import Home from './components/pages/Home';
-import ArticleListing from './components/pages/article/ArticleListing';
-import DataImport from './components/pages/admin/DataImport';
-import ConfigureUploadSchemas from './components/pages/admin/ConfigureUploadSchemas';
-import About from './components/pages/About';
+import Navigation from './pages/common/Navigation';
+import Home from './pages/Home';
+import ArticleListing from './pages/article/ArticleListing';
+import DataImport from './pages/admin/DataImport';
+import ConfigureUploadSchemas from './pages/admin/ConfigureUploadSchemas';
+import About from './pages/About';
 
 function App() {
 

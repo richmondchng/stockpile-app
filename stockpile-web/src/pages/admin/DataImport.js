@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import PageTitle from '../../common/PageTitle';
+import PageTitle from '../../components/common/PageTitle';
 
 /**
  * Data import screen

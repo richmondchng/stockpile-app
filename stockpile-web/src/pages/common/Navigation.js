@@ -1,5 +1,5 @@
-import NavBar from '../../common/navigation/NavBar'
-import NavBarItem from '../../common/navigation/NavBarItem'
+import NavBar from '../../components/common/navigation/NavBar'
+import NavBarItem from '../../components/common/navigation/NavBarItem'
 
 const Navigation = ({brand}) => {
     return (
