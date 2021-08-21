@@ -7,16 +7,16 @@ import NavBarMenuItem from './NavBarMenuItem';
  * @param {*} param0 
  * @returns 
  */
-const NavBarMenu = ({id, label, children}) => {
+const NavBarMenu = ({idx, label, children}) => {
     return (
-        <NavDropdown title={label} id={id}>
+        <NavDropdown title={label} id={idx}>
             {children}
         </NavDropdown>
     )
 }
 
 NavBarMenu.propTypes = {
-    id: PropTypes.string.isRequired,
+    idx: PropTypes.string.isRequired,
     label: PropTypes.string.isRequired,
     children: PropTypes.oneOfType([
         PropTypes.shape({

@@ -3,7 +3,7 @@ import PageTitle from '../../components/ui/PageTitle';
 import Form from '../../components/ui/form/Form';
 import DropdownInput from '../../components/ui/form/DropdownInput';
 import FileInput from '../../components/ui/form/FileInput';
-import { Button } from '../../components/ui/form/FormInputs';
+import Button from '../../components/ui/form/Button';
 
 /**
  * Data import screen
@@ -42,6 +42,7 @@ const DataImport = () => {
         getUploadSchemas();
     }, []);
 
+    // submit upload file
     const onSubmit = async (e) => {
         e.preventDefault();
 
@@ -82,9 +83,9 @@ const DataImport = () => {
         <div>
             <PageTitle>Data Import</PageTitle>
             <Form onSubmit={onSubmit}>
-                <DropdownInput id="schema" placeholder="Select an import schema" label="Upload Schema" 
+                <DropdownInput idx="schema" placeholder="Select an import schema" label="Upload Schema" 
                     data={uploadSchemas} onChange={v => {setSchema(v.target.value)}}></DropdownInput>
-                <FileInput id="formFile" label="Upload File (CSV)" placeholder={fileName}
+                <FileInput idx="formFile" label="Upload File (CSV)" placeholder={fileName}
                         onChange={onChange}></FileInput>
                 <Button type="submit" disabled={disableButton}>Import Data</Button>
             </Form>

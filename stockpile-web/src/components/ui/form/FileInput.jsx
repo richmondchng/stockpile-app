@@ -6,16 +6,16 @@ import PropTypes from 'prop-types';
  * @param {*} param0 
  * @returns 
  */
- const FileInput = ({id, label, placeholder, onChange}) => {
+ const FileInput = ({idx, label, placeholder, onChange}) => {
     return (
-        <Form.Group controlId={id} className="mb-3">
+        <Form.Group controlId={idx} className="mb-3">
             <Form.Label>{label}</Form.Label>
             <Form.Control type="file" size="sm" placeholder={placeholder} onChange={onChange} />
         </Form.Group>
     )
 }
 FileInput.propTypes = {
-    id: PropTypes.string.isRequired,
+    idx: PropTypes.string.isRequired,
     label: PropTypes.string,
     onChange: PropTypes.func
 }

@@ -11,13 +11,13 @@ import NavBarMenuItem from '../../components/ui/navigation/NavBarMenuItem';
 const Navigation = ({brand}) => {
     return (
         <NavBar brand={brand}>
-            <NavBarItem id="navHome" link="/" active={true}>Home</NavBarItem>
-            <NavBarItem id="navArticle" link="/articles">Article</NavBarItem>
-            <NavBarItem id="navUpload" link="/data-import">Upload</NavBarItem>
-            <NavBarMenu id="navAdmin" label="Administration">
-                <NavBarMenuItem id="navConfigureUploadSchema" link="/admin/configure-upload-schemas">Upload schema</NavBarMenuItem>
+            <NavBarItem idx="navHome" link="/" active={true}>Home</NavBarItem>
+            <NavBarItem idx="navArticle" link="/articles">Article</NavBarItem>
+            <NavBarItem idx="navUpload" link="/data-import">Upload</NavBarItem>
+            <NavBarMenu idx="navAdmin" label="Administration">
+                <NavBarMenuItem idx="navConfigureUploadSchema" link="/admin/configure-upload-schemas">Upload schema</NavBarMenuItem>
             </NavBarMenu>
-            <NavBarItem id="navAboutUs" label="About" link="/about">About</NavBarItem>
+            <NavBarItem idx="navAboutUs" label="About" link="/about">About</NavBarItem>
         </NavBar>
     )
 }

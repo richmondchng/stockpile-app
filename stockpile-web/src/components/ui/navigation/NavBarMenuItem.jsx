@@ -7,14 +7,14 @@ import PropTypes from 'prop-types';
  * @param {*} param0 
  * @returns 
  */
-const NavBarMenuItem = ({id, link, children}) => {
+const NavBarMenuItem = ({idx, link, children}) => {
     return (
-        <NavDropdown.Item as={Link} to={link} eventKey={id}>{children}</NavDropdown.Item>
+        <NavDropdown.Item as={Link} to={link} eventKey={idx}>{children}</NavDropdown.Item>
     )
 }
 
 NavBarMenuItem.propTypes = {
-    id : PropTypes.string.isRequired,
+    idx: PropTypes.string.isRequired,
     link: PropTypes.string,
     children: PropTypes.node.isRequired
 }

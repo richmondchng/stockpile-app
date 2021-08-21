@@ -13,12 +13,12 @@ import Alert from '../../ui/notification/Alert';
  * @param {*} param0 
  * @returns 
  */
-const ImportSchemaModal = ({id, title, show, currentData, postSubmitAction, postCancelAction}) => {
+const ImportSchemaModal = ({idx, title, show, currentData, postSubmitAction, postCancelAction}) => {
     let update = currentData.schema;
     let method = update ? 'PUT' : 'POST';
     let action = update ? `/api/v1.0/schemas/${currentData.schema}` : `/api/v1.0/schemas`;
     let buttonLabel = update ? 'Update' : 'Add';
-    let formId = `${id}-form`;
+    let formId = `${idx}-form`;
 
     // let successMessage = update ? 'Record updated' : 'Record added';
     // // alert
@@ -87,7 +87,6 @@ const ImportSchemaModal = ({id, title, show, currentData, postSubmitAction, post
                 //console.log("Error " + res.status);
                 const resData = await res.json();
                 console.log("Error " + res.status + " " +  JSON.stringify(resData));
-                console.log("Error " + res.status + " " +  resData.message);
                 setShowError({
                     show: true,
                     msg: resData.message
@@ -106,19 +105,19 @@ const ImportSchemaModal = ({id, title, show, currentData, postSubmitAction, post
         <Modal title={title} show={show} closeAction={handleCancelDialog}>
             <ModalBody>
                 <Alert show={showError.show} title="Error" variant="danger" onClose={() => {setShowError({...showError, show: false})}}>{showError.msg}</Alert>
-                <Form id={formId} onSubmit={handleSubmitDialog}>
-                     <TextInput id="schemaName" label="Schema Name" placeholder="schema name" value={modalData.name}
+                <Form idx={formId} onSubmit={handleSubmitDialog}>
+                     <TextInput idx="schemaName" label="Schema Name" placeholder="schema name" value={modalData.name}
                          changeAction={(e) => {
                              setModalData({...modalData, name: e.target.value})
                          }}></TextInput>
                      {modalData.schema && 
-                         <TextInput id="schemaSchema" label="Resource" value={modalData.schema} readOnly={true} />
+                         <TextInput idx="schemaSchema" label="Resource" value={modalData.schema} readOnly={true} />
                      }
-                     <TextInput id="schemaDesc" label="Schema Description" placeholder="short description" value={modalData.description}
+                     <TextInput idx="schemaDesc" label="Schema Description" placeholder="short description" value={modalData.description}
                         changeAction={(e) => {
                              setModalData({...modalData, description: e.target.value})
                          }}></TextInput>
-                     <TextInput id="schemaTopic" label="Consumer Topic" placeholder="topic name" value={modalData.topic}
+                     <TextInput idx="schemaTopic" label="Consumer Topic" placeholder="topic name" value={modalData.topic}
                          changeAction={(e) => {
                              setModalData({...modalData, topic: e.target.value})
                          }}></TextInput>
@@ -126,7 +125,7 @@ const ImportSchemaModal = ({id, title, show, currentData, postSubmitAction, post
             </ModalBody>
             <ModalFooter>
                 <Button onClick={handleCancelDialog}>Close</Button>
-                <Button type="submit" form={formId} variant="primary">{buttonLabel}</Button>
+                <Button type="submit" form={formId} variant="primary" disabled={disableButton}>{buttonLabel}</Button>
             </ModalFooter>
         </Modal>
     )
@@ -134,7 +133,7 @@ const ImportSchemaModal = ({id, title, show, currentData, postSubmitAction, post
 
 // prop types
 ImportSchemaModal.propTypes = {
-    id: PropTypes.string.isRequired,
+    idx: PropTypes.string.isRequired,
     title: PropTypes.string,
     show: PropTypes.bool.isRequired,
     postSubmitAction: PropTypes.func,

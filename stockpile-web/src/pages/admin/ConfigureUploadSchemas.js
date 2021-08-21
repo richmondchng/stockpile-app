@@ -1,8 +1,6 @@
 import { useState, useEffect } from 'react'
 import PageTitle from '../../components/ui/PageTitle';
 import ImportSchemaModal from '../../components/features/importer/ImportSchemaModal';
-import { InfoAlert, ErrorAlert } from '../../components/ui/Alerts';
-
 import Button from '../../components/ui/form/Button';
 
 /**
@@ -53,6 +51,7 @@ const ConfigureUploadSchemas = () => {
         getUploadSchemas();
     }, [reloadTable]);
 
+    // delete import schema details
     const deleteImportSchemaDetails = async (schema) => {
         console.log(`Delete ${JSON.stringify(schema)}`);
         if(window.confirm(`Confirm delete schema: ${schema.name}?`)) {
@@ -132,13 +131,13 @@ const ConfigureUploadSchemas = () => {
                     </td></tr>
                 </tfoot>
             </table>
-            <ImportSchemaModal id="insert-schema" title="New Upload Schema Configuration" show={showAdd}
+            <ImportSchemaModal idx="insert-schema" title="New Upload Schema Configuration" show={showAdd}
                 postSubmitAction={() => {
                     setReloadTable(reloadTable + 1);
                     setShowAdd(false);
                 }}
                 postCancelAction={() => setShowAdd(false)}></ImportSchemaModal>
-            <ImportSchemaModal id="update-schema" title="Update Upload Schema Configuration" show={showUpdate}
+            <ImportSchemaModal idx="update-schema" title="Update Upload Schema Configuration" show={showUpdate}
                 currentData={currentData}
                 postSubmitAction={() => {
                     setReloadTable(reloadTable + 1);

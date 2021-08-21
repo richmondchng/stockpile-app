@@ -1,4 +1,4 @@
-import BButton from 'react-bootstrap/Button';
+import _Button from 'react-bootstrap/Button';
 import PropTypes from 'prop-types';
 import { getComponentId } from '../../utility/Util';
 
@@ -7,17 +7,16 @@ import { getComponentId } from '../../utility/Util';
  * @param {*} param0 
  * @returns 
  */
- const Button = ({id, form, type, label, variant, disabled, children, onClick}) => {
+ const Button = ({idx, form, type, label, variant, disabled, children, onClick}) => {
     const buttonLabel = children ? children : label;
-    const idValue = getComponentId(id);
+    const idValue = getComponentId(idx);
 
     return (
-        // <button type={type} form={form} id={idValue} className={`btn btn-primary ${className}`} onClick={onClick} disabled={disabled}>{buttonLabel}</button>
-        <BButton variant={variant} type={type} form={form} id={idValue} onClick={onClick} disabled={disabled}>{buttonLabel}</BButton>
+        <_Button variant={variant} type={type} form={form} id={idValue} onClick={onClick} disabled={disabled}>{buttonLabel}</_Button>
     )
 }
 Button.propTypes = {
-    id: PropTypes.string,
+    idx: PropTypes.string,
     form: PropTypes.string,
     type: PropTypes.string.isRequired,
     label: PropTypes.string,

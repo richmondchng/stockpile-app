@@ -6,20 +6,16 @@ import Form from 'react-bootstrap/Form';
  * @param {*} param0 
  * @returns 
  */
- const TextInput = ({id, label, placeholder, value, changeAction, readOnly}) => {
+ const TextInput = ({idx, label, placeholder, value, changeAction, readOnly}) => {
     return (
-        // <div className="mb-3">
-        //     <label htmlFor={id} className="form-label">{label}</label>
-        //     <input type="text" className="form-control form-control-sm" id={id} value={value} placeholder={placeholder} onChange={changeAction} readOnly={readOnly} />
-        // </div>
-        <Form.Group className="mb-3" size="sm" controlId={id}>
+        <Form.Group className="mb-3" size="sm" controlId={idx}>
             <Form.Label>{label}</Form.Label>
             <Form.Control type="text" value={value} placeholder={placeholder} onChange={changeAction} readOnly={readOnly} />
         </Form.Group>
     )
 }
 TextInput.propTypes = {
-    id: PropTypes.string.isRequired,
+    idx: PropTypes.string.isRequired,
     label: PropTypes.string,
     changeAction: PropTypes.func
 }
