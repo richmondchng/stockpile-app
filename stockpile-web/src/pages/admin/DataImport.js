@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react'
-import PageTitle from '../../components/common/ui/PageTitle';
-import Form from '../../components/common/form/Form';
-import DropdownInput from '../../components/common/form/DropdownInput';
-import FileInput from '../../components/common/form/FileInput';
-import Button from '../../components/common/form/Button';
+import PageTitle from '../../components/ui/PageTitle';
+import Form from '../../components/ui/form/Form';
+import DropdownInput from '../../components/ui/form/DropdownInput';
+import FileInput from '../../components/ui/form/FileInput';
+import { Button } from '../../components/ui/form/FormInputs';
 
 /**
  * Data import screen

@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { Modal, ModalBody, ModalButtonBar } from '../../common/ui/ModalDialog';
-import { InfoAlert, ErrorAlert } from '../../common/ui/Alerts'
-import Form from '../../common/form/Form';
-import { TextInput, Button } from '../../common/form/FormInputs';
+import { Modal, ModalBody, ModalButtonBar } from '../../ui/ModalDialog';
+import { InfoAlert, ErrorAlert } from '../../ui/Alerts'
+import Form from '../../ui/form/Form';
+import { TextInput, Button } from '../../ui/form/FormInputs';
 
 /**
  * Import schema pop up dialog box

@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import { Button } from '../form/FormInputs';
+import Button from '../ui/form/Button';
 
 /**
  * Modal dialog body.

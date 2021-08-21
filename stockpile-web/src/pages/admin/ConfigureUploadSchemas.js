@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react'
-import PageTitle from '../../components/common/ui/PageTitle';
+import PageTitle from '../../components/ui/PageTitle';
 import ImportSchemaModal from '../../components/features/importer/ImportSchemaModal';
-import { ModalOpenButton } from '../../components/common/ui/ModalDialog';
-import { Button } from '../../components/common/form/FormInputs';
-import { InfoAlert, ErrorAlert } from '../../components/common/ui/Alerts';
+import { ModalOpenButton } from '../../components/ui/ModalDialog';
+import { Button } from '../../components/ui/form/FormInputs';
+import { InfoAlert, ErrorAlert } from '../../components/ui/Alerts';
 
 /**
  * Screen to view and configure upload schema.

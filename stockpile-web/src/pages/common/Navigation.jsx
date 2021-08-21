@@ -1,7 +1,7 @@
-import NavBar from '../../components/common/navigation/NavBar';
-import NavBarItem from '../../components/common/navigation/NavBarItem';
-import NavBarMenu from '../../components/common/navigation/NavBarMenu';
-import NavBarMenuItem from '../../components/common/navigation/NavBarMenuItem';
+import NavBar from '../../components/ui/navigation/NavBar';
+import NavBarItem from '../../components/ui/navigation/NavBarItem';
+import NavBarMenu from '../../components/ui/navigation/NavBarMenu';
+import NavBarMenuItem from '../../components/ui/navigation/NavBarMenuItem';
 
 /**
  * Navigation menu bar.

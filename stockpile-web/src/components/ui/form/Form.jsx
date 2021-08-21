@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import { getComponentId } from '../Util';
+import { getComponentId } from '../../utility/Util';
 import BForm from 'react-bootstrap/Form';
 
 /**
