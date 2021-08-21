@@ -1,25 +1,27 @@
 import PropTypes from 'prop-types';
 import { getComponentId } from '../Util';
+import BForm from 'react-bootstrap/Form';
 
 /**
  * Basic form
  * @param {*} param0 
  * @returns 
  */
-const Form = ({id, children, submitAction}) => {
+const Form = ({id, children, onSubmit}) => {
 
     const idValue = getComponentId(id);
 
     return (
-        <form id={idValue} onSubmit={submitAction}>
-            {children}
-        </form>
+        // <form id={idValue} onSubmit={submitAction}>
+        //     {children}
+        // </form>
+        <BForm id={idValue} onSubmit={onSubmit} size="sm">{children}</BForm>
     )
 }
 
 Form.propTypes = {
     children: PropTypes.node,
-    submitAction: PropTypes.func,
+    onSubmit: PropTypes.func,
     id: PropTypes.string
 }
 

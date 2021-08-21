@@ -3,6 +3,11 @@ import NavBarItem from '../../components/common/navigation/NavBarItem';
 import NavBarMenu from '../../components/common/navigation/NavBarMenu';
 import NavBarMenuItem from '../../components/common/navigation/NavBarMenuItem';
 
+/**
+ * Navigation menu bar.
+ * @param {*} param0 
+ * @returns 
+ */
 const Navigation = ({brand}) => {
     return (
         <NavBar brand={brand}>
