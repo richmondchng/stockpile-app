@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import PropTypes from 'prop-types';
 
@@ -8,7 +9,7 @@ import PropTypes from 'prop-types';
  */
 const NavBarMenuItem = ({id, link, children}) => {
     return (
-        <NavDropdown.Item href={link} eventKey={id}>{children}</NavDropdown.Item>
+        <NavDropdown.Item as={Link} to={link} eventKey={id}>{children}</NavDropdown.Item>
     )
 }
 

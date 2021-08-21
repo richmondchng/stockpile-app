@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import Nav from 'react-bootstrap/Nav';
 import PropTypes from 'prop-types';
 
@@ -11,7 +12,7 @@ import PropTypes from 'prop-types';
 const NavBarItem = ({id, link = "#", active = false, children}) => {
     return (
         <Nav.Item>
-            <Nav.Link eventKey={id} active={active} href={link}>{children}</Nav.Link>
+            <Nav.Link as={Link} to={link} eventKey={id} active={active}>{children}</Nav.Link>
         </Nav.Item>
     )
 }
