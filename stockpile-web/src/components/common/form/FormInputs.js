@@ -28,12 +28,12 @@ TextInput.defaultProps = {
  * @param {*} param0 
  * @returns 
  */
- const Button = ({id, form, type, className, label = 'Button', disabled, children, clickAction}) => {
+ const Button = ({id, form, type, className, label = 'Button', disabled, children, onClick}) => {
     const buttonLabel = children ? children : label;
     const idValue = getComponentId(id);
 
     return (
-        <button type={type} form={form} id={idValue} className={`btn btn-primary ${className}`} onClick={clickAction} disabled={disabled}>{buttonLabel}</button>
+        <button type={type} form={form} id={idValue} className={`btn btn-primary ${className}`} onClick={onClick} disabled={disabled}>{buttonLabel}</button>
     )
 }
 Button.propTypes = {

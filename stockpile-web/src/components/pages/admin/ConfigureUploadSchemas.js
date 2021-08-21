@@ -3,6 +3,7 @@ import PageTitle from '../../common/PageTitle';
 import ImportSchemaModal from '../../features/importer/ImportSchemaModal';
 import { ModalOpenButton } from '../../common/ui/ModalDialog';
 import { Button } from '../../common/form/FormInputs';
+import { InfoAlert, ErrorAlert } from '../../common/ui/Alerts';
 
 /**
  * Screen to view and configure upload schema.
@@ -17,6 +18,15 @@ const ConfigureUploadSchemas = () => {
         description: "",
         topic: ""
     });
+    // alert
+    const [alertInfo, setAlertInfo] = useState({
+        show: false,
+        msg: ""
+    });
+    const [alertError, setAlertError] = useState({
+        show: false,
+        msg: "" 
+    });
 
     // get list of upload schemas to populate table
     useEffect(() => {
@@ -26,7 +36,12 @@ const ConfigureUploadSchemas = () => {
                 const response = await fetch('/api/v1.0/schemas', { method: 'GET'});
                 if(response.status === 200) {
                     const jsonData = await response.json();
+                    console.log("get available schemas " + jsonData);
                     setUploadSchemas(jsonData.data);
+                } else if(response.status == 204) {
+                    // no data
+                    console.log("no available schemas ");
+                    setUploadSchemas([]);
                 }
             } catch(err) {
                 console.error(err);
@@ -35,9 +50,49 @@ const ConfigureUploadSchemas = () => {
         getUploadSchemas();
     }, [reloadTable]);
 
+    const deleteImportSchemaDetails = async (schema) => {
+        console.log(`Delete ${JSON.stringify(schema)}`);
+        if(window.confirm(`Confirm delete schema: ${schema.name}?`)) {
+            console.log("confirmed");
+            try {
+                const res = await fetch(`/api/v1.0/schemas/${schema.schema}`, {
+                    method: 'DELETE',
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    }
+                });
+                if(res.status === 200) {
+                    // reload table
+                    setAlertInfo({
+                        msg: 'Record deleted',
+                        show: true
+                    });
+                    setReloadTable(reloadTable + 1);
+                } else {
+                    //console.log("Error " + res.status);
+                    const resData = await res.json();
+                    console.log("Error " + res.status + " " +  JSON.stringify(resData));
+                    setAlertError({
+                        show: true,
+                        msg: resData.message
+                    });
+                }
+            } catch(err) {
+                // setAlertError({
+                //     show: true,
+                //     msg: err
+                // });
+                console.error(err);
+            }
+        }
+    }
+
     return (
         <div>
             <PageTitle>Configure Upload Schemas</PageTitle>
+            <InfoAlert show={alertInfo.show}>{alertInfo.msg}</InfoAlert>
+            <ErrorAlert show={alertError.show}>{alertError.msg}</ErrorAlert>
             <table className="table caption-top table-bordered table-striped table-hover">
                 <caption>List of upload schema</caption>
                 <thead>
@@ -58,9 +113,9 @@ const ConfigureUploadSchemas = () => {
                             <td>{value.description}</td>
                             <td>{value.topic}</td>
                             <td align="right">
-                                <ModalOpenButton target="update-schema" clickAction={() => {setCurrentData(value)}}><i className="bi bi-pencil-square"></i></ModalOpenButton>
+                                <ModalOpenButton target="update-schema" onClick={() => {setCurrentData(value)}}><i className="bi bi-pencil-square"></i></ModalOpenButton>
                                 &nbsp;
-                                <Button ><i className="bi bi-trash"></i></Button>
+                                <Button onClick={() => {deleteImportSchemaDetails(value)}}><i className="bi bi-trash"></i></Button>
                             </td>
                         </tr>
                         )

@@ -50,14 +50,14 @@ ModalButtonBar.propTypes = {
  * @param {*} param0 
  * @returns 
  */
-const ModalOpenButton = ({target, children, clickAction}) => {
+const ModalOpenButton = ({target, children, onClick}) => {
     return (
-        <button type="button" className="btn btn-primary" data-bs-toggle="modal" data-bs-target={`#${target}`} onClick={clickAction}>{children}</button>
+        <button type="button" className="btn btn-primary" data-bs-toggle="modal" data-bs-target={`#${target}`} onClick={onClick}>{children}</button>
     )
 }
 ModalOpenButton.propTypes = {
     children: PropTypes.node.isRequired,
-    clickAction: PropTypes.func
+    onClick: PropTypes.func
 }
 
 /**

@@ -7,7 +7,12 @@ import PropTypes from 'prop-types';
  */
 const Alert = ({show, level, children}) => {
     return (
-        <span>{show ? (<div className={`alert alert-${level}`} role="alert">{children}</div>) : null}</span>
+        <span>{show ? (
+            <div className={`alert alert-${level} alert-dismissible fade show`} role="alert">
+                {children}
+                <button type="button" className="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            ) : null}</span>
     )
 }
 
