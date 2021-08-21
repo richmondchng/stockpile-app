@@ -1,6 +1,6 @@
 import './App.css';
 import { Route, Switch, BrowserRouter as Router } from 'react-router-dom';
-import Navigation from './pages/common/Navigation';
+import Navigation from './pages/menu/Navigation';
 import Home from './pages/Home';
 import ArticleListing from './pages/article/ArticleListing';
 import DataImport from './pages/admin/DataImport';
