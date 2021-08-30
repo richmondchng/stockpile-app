@@ -56,6 +56,7 @@ const ImportSchemaModal = ({idx, title, show, currentData, postSubmitAction, pos
     const handleCancelDialog = () => {
         setModalData({name: "", description: "", topic: ""});
         setShowError({...showError, show: false,});
+        setDisableButton(false);
         console.log("closing");
         postCancelAction();
     };
@@ -104,7 +105,11 @@ const ImportSchemaModal = ({idx, title, show, currentData, postSubmitAction, pos
     return (
         <Modal title={title} show={show} closeAction={handleCancelDialog}>
             <ModalBody>
-                <Alert show={showError.show} title="Error" variant="danger" onClose={() => {setShowError({...showError, show: false})}}>{showError.msg}</Alert>
+                <Alert show={showError.show} title="Error" variant="danger" 
+                    onClose={() => {
+                        setShowError({...showError, show: false});
+                        setDisableButton(false);
+                    }}>{showError.msg}</Alert>
                 <Form idx={formId} onSubmit={handleSubmitDialog}>
                      <TextInput idx="schemaName" label="Schema Name" placeholder="schema name" value={modalData.name}
                          onChange={(e) => {
