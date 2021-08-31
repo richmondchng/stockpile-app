@@ -6,9 +6,12 @@ import ArticleListing from './pages/article/ArticleListing';
 import DataImport from './pages/admin/DataImport';
 import ConfigureUploadSchemas from './pages/admin/ConfigureUploadSchemas';
 import About from './pages/About';
+import { useSelector } from 'react-redux';
 
 function App() {
 
+    const state = useSelector(state => state.toasts);
+    console.log("state=" + JSON.stringify(state));
     return (
         <div>
             <Router>

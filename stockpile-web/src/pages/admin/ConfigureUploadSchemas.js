@@ -132,9 +132,15 @@ const ConfigureUploadSchemas = () => {
                 </tfoot>
             </table>
             <ImportSchemaModal idx="insert-schema" title="New Upload Schema Configuration" show={showAdd}
+                currentData={currentData}
                 postSubmitAction={() => {
                     setReloadTable(reloadTable + 1);
                     setShowAdd(false);
+                    setCurrentData({
+                        name: "",
+                        description: "",
+                        topic: ""
+                    });
                 }}
                 postCancelAction={() => setShowAdd(false)}></ImportSchemaModal>
             <ImportSchemaModal idx="update-schema" title="Update Upload Schema Configuration" show={showUpdate}
@@ -142,6 +148,11 @@ const ConfigureUploadSchemas = () => {
                 postSubmitAction={() => {
                     setReloadTable(reloadTable + 1);
                     setShowUpdate(false);
+                    setCurrentData({
+                        name: "",
+                        description: "",
+                        topic: ""
+                    });
                 }}
                 postCancelAction={() => setShowUpdate(false)}></ImportSchemaModal>
         </div>

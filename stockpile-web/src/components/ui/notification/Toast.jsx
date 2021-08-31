@@ -1,4 +1,6 @@
 import _Toast from 'react-bootstrap/Toast';
+import _ToastContainer from 'react-bootstrap/ToastContainer';
+import PropTypes from 'prop-types';
 
 const Toast = ({idx, title, variant, message, show}) => {
     return (
@@ -15,4 +17,17 @@ const Toast = ({idx, title, variant, message, show}) => {
     )
 }
 
-export default Toast
+const ToastContainer = ({position, children}) => {
+    return (
+        <ToastContainer className="p-3" position={position}>{children}</ToastContainer>
+    )
+}
+
+ToastContainer.defaultProps = {
+    position: 'bottom-end'
+}
+
+export { 
+    ToastContainer,
+    Toast
+}

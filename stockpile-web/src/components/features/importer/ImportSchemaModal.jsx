@@ -7,6 +7,8 @@ import Form from '../../ui/form/Form';
 import Button from '../../ui/form/Button';
 import TextInput from '../../ui/form/TextInput';
 import Alert from '../../ui/notification/Alert';
+import { useDispatch } from 'react-redux';
+import { showInfo } from '../../../redux/actions/toastActions';
 
 /**
  * Import schema pop up dialog box
@@ -14,12 +16,13 @@ import Alert from '../../ui/notification/Alert';
  * @returns 
  */
 const ImportSchemaModal = ({idx, title, show, currentData, postSubmitAction, postCancelAction}) => {
-    let update = currentData.schema;
-    let method = update ? 'PUT' : 'POST';
-    let action = update ? `/api/v1.0/schemas/${currentData.schema}` : `/api/v1.0/schemas`;
-    let buttonLabel = update ? 'Update' : 'Add';
-    let formId = `${idx}-form`;
+    const update = currentData.schema;
+    const method = update ? 'PUT' : 'POST';
+    const action = update ? `/api/v1.0/schemas/${currentData.schema}` : `/api/v1.0/schemas`;
+    const buttonLabel = update ? 'Update' : 'Add';
+    const formId = `${idx}-form`;
 
+    const dispatch = useDispatch();
     // let successMessage = update ? 'Record updated' : 'Record added';
     // // alert
     // const [alertInfo, setAlertInfo] = useState({
@@ -83,6 +86,7 @@ const ImportSchemaModal = ({idx, title, show, currentData, postSubmitAction, pos
                 //     ...alertInfo,
                 //     show: true
                 // });
+                dispatch(showInfo("Record added"));
                 postSubmitAction();
             } else {
                 //console.log("Error " + res.status);
