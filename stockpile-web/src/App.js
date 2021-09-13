@@ -8,11 +8,13 @@ import ConfigureUploadSchemas from './pages/admin/ConfigureUploadSchemas';
 import About from './pages/About';
 import Toasts from './components/ui/notification/Toast';
 import { useSelector } from 'react-redux';
+import { useState, useEffect } from 'react';
 
 function App() {
 
+    // toast messages
     const toasts = useSelector(state => state.toasts);
-    // console.log("toasts=" + JSON.stringify(toasts));
+
     return (
         <div>
             <Router>

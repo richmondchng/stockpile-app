@@ -2,8 +2,16 @@ import PropTypes from 'prop-types';
 
 let id = 0;
 
-export const showToastNotification = (message, variant, title) => {
-    return notification('show-toast-notification', title, variant, message, true);
+/**
+ * Show toast notification action.
+ * @param {*} message message
+ * @param {*} variant info, warning, danger
+ * @param {*} title default to Info
+ * @param {*} delay default to 3000ms
+ * @returns function
+ */
+export const showToastNotification = (message, variant, title, delay) => {
+    return notification('show-toast-notification', title, variant, message, true, delay);
 }
 
 showToastNotification.PropTypes = {
@@ -11,15 +19,17 @@ showToastNotification.PropTypes = {
         'info', 'warning', 'danger'
     ]),
     message: PropTypes.string.isRequired,
-    title: PropTypes.string
+    title: PropTypes.string,
+    delay: PropTypes.number
 }
 
 showToastNotification.defaultProps = {
     variant: 'info',
-    title: 'Info'
+    title: 'Info',
+    delay: 3000
 }
 
-const notification = (payloadType, title, variant, message, show) => {
+const notification = (payloadType, title, variant, message, show, delay) => {
     return {
         type: payloadType,
         payload: {
@@ -27,11 +37,17 @@ const notification = (payloadType, title, variant, message, show) => {
             title: title,
             variant: variant,
             message: message,
-            show: show
+            show: show,
+            delay: delay
         }
     }
 }
 
+/**
+ * Close toast notification action
+ * @param {*} idx toast id
+ * @returns function
+ */
 export const closeToastNotification = (idx) => {
     return {
         type: 'close-toast-notification',

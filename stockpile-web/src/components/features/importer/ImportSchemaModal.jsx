@@ -7,7 +7,6 @@ import Form from '../../ui/form/Form';
 import Button from '../../ui/form/Button';
 import TextInput from '../../ui/form/TextInput';
 import Alert from '../../ui/notification/Alert';
-//import showToastInfo from '../util/notifications';
 import {useInfoToast} from '../../util/toast-notification';
 
 /**

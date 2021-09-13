@@ -2,7 +2,7 @@ import Toast from 'react-bootstrap/Toast';
 import ToastContainer from 'react-bootstrap/ToastContainer';
 import PropTypes from 'prop-types';
 import { useCloseToast } from '../../util/toast-notification';
-// import Fade from 'react-bootstrap/Fade';
+import Fade from 'react-bootstrap/Fade';
 
 /**
  * Toasts notifications.
@@ -17,8 +17,8 @@ const Toasts = ({position, toasts}) => {
             {toasts.map((toast, index) => {
                 return (
                     <Toast className="d-inline-block m-1" bg={toast.variant} key={index} show={toast.show}
-                        onClose={() => closeToast(toast.id)}>
-                        {/* delay={3000} autohide animation transition={Fade}> */}
+                        onClose={() => closeToast(toast.id)}
+                        delay={toast.delay} autohide transition={Fade}>
                         <Toast.Header>
                             <strong className="me-auto">{toast.title}</strong>
                             <small>11 mins ago</small>
