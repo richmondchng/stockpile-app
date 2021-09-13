@@ -7,8 +7,8 @@ import Form from '../../ui/form/Form';
 import Button from '../../ui/form/Button';
 import TextInput from '../../ui/form/TextInput';
 import Alert from '../../ui/notification/Alert';
-import { useDispatch } from 'react-redux';
-import { showInfo } from '../../../redux/actions/toastActions';
+//import showToastInfo from '../util/notifications';
+import {useInfoToast} from '../../util/toast-notification';
 
 /**
  * Import schema pop up dialog box
@@ -16,24 +16,6 @@ import { showInfo } from '../../../redux/actions/toastActions';
  * @returns 
  */
 const ImportSchemaModal = ({idx, title, show, currentData, postSubmitAction, postCancelAction}) => {
-    const update = currentData.schema;
-    const method = update ? 'PUT' : 'POST';
-    const action = update ? `/api/v1.0/schemas/${currentData.schema}` : `/api/v1.0/schemas`;
-    const buttonLabel = update ? 'Update' : 'Add';
-    const formId = `${idx}-form`;
-
-    const dispatch = useDispatch();
-    // let successMessage = update ? 'Record updated' : 'Record added';
-    // // alert
-    // const [alertInfo, setAlertInfo] = useState({
-    //     show: false,
-    //     msg: successMessage
-    // });
-    // const [alertError, setAlertError] = useState({
-    //     show: false,
-    //     msg: "" 
-    // });
-
     const [disableButton, setDisableButton] = useState(false);
     const [showError, setShowError] = useState({
         show: false,
@@ -46,6 +28,27 @@ const ImportSchemaModal = ({idx, title, show, currentData, postSubmitAction, pos
         description: "",
         topic: ""
     });
+
+    const showInfoToast = useInfoToast();
+
+    const update = currentData.schema;
+    const method = update ? 'PUT' : 'POST';
+    const action = update ? `/api/v1.0/schemas/${currentData.schema}` : `/api/v1.0/schemas`;
+    const message = update ? `Import schema configuration ${modalData.name} updated` : `Import schema configuration ${modalData.name} added`
+    const buttonLabel = update ? 'Update' : 'Add';
+    const formId = `${idx}-form`;
+    // let successMessage = update ? 'Record updated' : 'Record added';
+    // // alert
+    // const [alertInfo, setAlertInfo] = useState({
+    //     show: false,
+    //     msg: successMessage
+    // });
+    // const [alertError, setAlertError] = useState({
+    //     show: false,
+    //     msg: "" 
+    // });
+
+
     useEffect(() => {
         setModalData({
             name: currentData.name ? currentData.name : '',
@@ -86,7 +89,9 @@ const ImportSchemaModal = ({idx, title, show, currentData, postSubmitAction, pos
                 //     ...alertInfo,
                 //     show: true
                 // });
-                dispatch(showInfo("Record added"));
+                showInfoToast(message);
+
+                setDisableButton(false);
                 postSubmitAction();
             } else {
                 //console.log("Error " + res.status);

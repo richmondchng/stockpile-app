@@ -6,12 +6,13 @@ import ArticleListing from './pages/article/ArticleListing';
 import DataImport from './pages/admin/DataImport';
 import ConfigureUploadSchemas from './pages/admin/ConfigureUploadSchemas';
 import About from './pages/About';
+import Toasts from './components/ui/notification/Toast';
 import { useSelector } from 'react-redux';
 
 function App() {
 
-    const state = useSelector(state => state.toasts);
-    console.log("state=" + JSON.stringify(state));
+    const toasts = useSelector(state => state.toasts);
+    // console.log("toasts=" + JSON.stringify(toasts));
     return (
         <div>
             <Router>
@@ -26,6 +27,7 @@ function App() {
                     </Switch>
                 </div>
             </Router>
+            <Toasts toasts={toasts}></Toasts>
         </div>
     );
 }

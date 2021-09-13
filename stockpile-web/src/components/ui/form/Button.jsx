@@ -1,6 +1,6 @@
 import _Button from 'react-bootstrap/Button';
 import PropTypes from 'prop-types';
-import { getComponentId } from '../../utility/Util';
+import { getComponentId } from '../../util/common-utils';
 
 /**
  * Button component

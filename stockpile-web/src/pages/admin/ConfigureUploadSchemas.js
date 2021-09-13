@@ -2,12 +2,14 @@ import { useState, useEffect } from 'react'
 import PageTitle from '../../components/ui/PageTitle';
 import ImportSchemaModal from '../../components/features/importer/ImportSchemaModal';
 import Button from '../../components/ui/form/Button';
+import { useWarningToast, useErrorToast } from '../../components/util/toast-notification';
 
 /**
  * Screen to view and configure upload schema.
  * @returns function
  */
 const ConfigureUploadSchemas = () => {
+
     const [showAdd, setShowAdd] = useState(false);
     const [showUpdate, setShowUpdate] = useState(false);
 
@@ -19,6 +21,10 @@ const ConfigureUploadSchemas = () => {
         description: "",
         topic: ""
     });
+
+    const showWarningToast = useWarningToast();
+    const showErrorToast = useErrorToast();
+
     // // alert
     // const [alertInfo, setAlertInfo] = useState({
     //     show: false,
@@ -71,6 +77,8 @@ const ConfigureUploadSchemas = () => {
                     //     show: true
                     // });
                     setReloadTable(reloadTable + 1);
+                    showWarningToast('Record deleted');
+                    //dispatch(showWarning('Record deleted'));
                 } else {
                     //console.log("Error " + res.status);
                     const resData = await res.json();
@@ -79,13 +87,17 @@ const ConfigureUploadSchemas = () => {
                     //     show: true,
                     //     msg: resData.message
                     // });
+                    
+                    //dispatch(showError('Error deleting record'));
+                    showErrorToast('Error deleting record');
                 }
             } catch(err) {
                 // setAlertError({
                 //     show: true,
                 //     msg: err
                 // });
-                console.error(err);
+                console.error("error=" + err);
+                showErrorToast('Error deleting record');
             }
         }
     }
