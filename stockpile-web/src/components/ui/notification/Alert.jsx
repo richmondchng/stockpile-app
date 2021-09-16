@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import _Alert from 'react-bootstrap/Alert';
+import BootstrapAlert from 'react-bootstrap/Alert';
 
 /**
  * Standard alert.
@@ -7,12 +7,12 @@ import _Alert from 'react-bootstrap/Alert';
  * @returns 
  */
 const Alert = ({show, variant, onClose, title, children}) => {
-    let heading = title ? <_Alert.Heading>{title}</_Alert.Heading> : '';
+    let heading = title ? <BootstrapAlert.Heading>{title}</BootstrapAlert.Heading> : '';
     return (
-        <_Alert variant={variant} show={show} onClose={onClose} dismissible>
+        <BootstrapAlert variant={variant} show={show} onClose={onClose} dismissible>
             {heading}
             {children}
-        </_Alert>
+        </BootstrapAlert>
     )
 }
 

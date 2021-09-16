@@ -40,9 +40,7 @@ export function useErrorToast() {
  */
 export function useCloseToast() {
     const dispatch = useDispatch();
-
-    function closeToast(id) {
+    return (id) => {
         dispatch(closeToastNotification(id));
-    }
-    return closeToast;
+    };
 }

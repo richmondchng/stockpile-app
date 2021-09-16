@@ -4,6 +4,7 @@ import Form from '../../components/ui/form/Form';
 import DropdownInput from '../../components/ui/form/DropdownInput';
 import FileInput from '../../components/ui/form/FileInput';
 import Button from '../../components/ui/form/Button';
+import { useInfoAlert, useErrorInfo } from '../../components/util/alert-notification';
 
 /**
  * Data import screen
@@ -16,6 +17,9 @@ const DataImport = () => {
     const [uploadSchemas, setUploadSchemas] = useState([]);
     // file to submit
     const [fileName, setFileName] = useState('Choose file');
+
+    const showInfoAlert = useInfoAlert();
+    const showErrorAlert = useErrorInfo();
 
     const onChange = e => {
         setFile(e.target.files[0]);
@@ -68,9 +72,12 @@ const DataImport = () => {
             if(res.status === 200) {
                 const resData = await res.json();
                 //console.log(resData);
-                alert("Upload successful");
+                //alert("Upload successful");
+                showInfoAlert("Upload successful");
             } else {
-                console.log("Error " + res.status);
+                const resData = await res.json();
+                showErrorAlert(`${resData.error}`);
+                console.log(`Error => ${resData.message}`);
             }
         } catch(err) {
             console.error(err);
