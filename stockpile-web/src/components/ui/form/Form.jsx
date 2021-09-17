@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import { getComponentId } from '../../util/common-utils';
-import _Form from 'react-bootstrap/Form';
+import BootstrapForm from 'react-bootstrap/Form';
 
 /**
  * Basic form
@@ -10,7 +10,7 @@ import _Form from 'react-bootstrap/Form';
 const Form = ({idx, children, onSubmit}) => {
     const idValue = getComponentId(idx);
     return (
-        <_Form id={idValue} onSubmit={onSubmit} size="sm">{children}</_Form>
+        <BootstrapForm id={idValue} onSubmit={onSubmit} size="sm">{children}</BootstrapForm>
     )
 }
 

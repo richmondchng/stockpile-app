@@ -25,16 +25,6 @@ const ConfigureUploadSchemas = () => {
     const showWarningToast = useWarningToast();
     const showErrorToast = useErrorToast();
 
-    // // alert
-    // const [alertInfo, setAlertInfo] = useState({
-    //     show: false,
-    //     msg: ""
-    // });
-    // const [alertError, setAlertError] = useState({
-    //     show: false,
-    //     msg: "" 
-    // });
-
     // get list of upload schemas to populate table
     useEffect(() => {
         const getUploadSchemas = async () => {
@@ -43,7 +33,6 @@ const ConfigureUploadSchemas = () => {
                 const response = await fetch('/api/v1.0/schemas', { method: 'GET'});
                 if(response.status === 200) {
                     const jsonData = await response.json();
-                    console.log("get available schemas " + jsonData);
                     setUploadSchemas(jsonData.data);
                 } else if(response.status === 204) {
                     // no data
@@ -127,7 +116,7 @@ const ConfigureUploadSchemas = () => {
                             <td>{value.description}</td>
                             <td>{value.topic}</td>
                             <td align="right">
-                                <Button onClick={() => setShowUpdate(true)} onClick={() => {
+                                <Button onClick={() => {
                                     setCurrentData(value);
                                     setShowUpdate(true);
                                 }}><i className="bi bi-pencil-square"></i></Button> {' '}

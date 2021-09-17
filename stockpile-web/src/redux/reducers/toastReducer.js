@@ -10,13 +10,10 @@ const reducer = (state = [], action) => {
             return [...state, action.payload];
         case 'close-toast-notification':
             const toasts = [];
-            state.map(toast => {
-                // if(toast.id !== action.payload) {
-                //     toasts.push(toast);
-                // }
+            state.forEach(toast => {
                 toast.show = (toast.id !== action.payload);
                 toasts.push(toast);
-            })
+            });
             return toasts;
         default:
             return state;

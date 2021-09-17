@@ -1,4 +1,4 @@
-import _Button from 'react-bootstrap/Button';
+import BootstrapButton from 'react-bootstrap/Button';
 import PropTypes from 'prop-types';
 import { getComponentId } from '../../util/common-utils';
 
@@ -12,7 +12,7 @@ import { getComponentId } from '../../util/common-utils';
     const idValue = getComponentId(idx);
 
     return (
-        <_Button variant={variant} type={type} form={form} id={idValue} onClick={onClick} disabled={disabled}>{buttonLabel}</_Button>
+        <BootstrapButton variant={variant} type={type} form={form} id={idValue} onClick={onClick} disabled={disabled}>{buttonLabel}</BootstrapButton>
     )
 }
 Button.propTypes = {
