@@ -1,30 +1,30 @@
 import PropTypes from 'prop-types';
-import _Modal from 'react-bootstrap/Modal';
-import ModalBody from './ModalBody';
-import ModalFooter from './ModalFooter';
+import BootstrapModal from 'react-bootstrap/Modal';
+import BootstrapModalBody from './ModalBody';
+import BootstrapModalFooter from './ModalFooter';
 
 const Modal = ({title, show, children, closeAction}) => {
     return (
-        <_Modal show={show} onHide={closeAction} backdrop="static" keyboard={false}>
-            <_Modal.Header closeButton>
-                <_Modal.Title>{title}</_Modal.Title>
-            </_Modal.Header>
+        <BootstrapModal show={show} onHide={closeAction} backdrop="static" keyboard={false}>
+            <BootstrapModal.Header closeButton>
+                <BootstrapModal.Title>{title}</BootstrapModal.Title>
+            </BootstrapModal.Header>
             {children}
-        </_Modal>
+        </BootstrapModal>
     )
 }
 Modal.propTypes = {
     children: PropTypes.oneOfType([
         PropTypes.shape({
-            type: PropTypes.oneOf([ModalBody])
+            type: PropTypes.oneOf([BootstrapModalBody])
         }),
         PropTypes.arrayOf(
             PropTypes.oneOfType([
                 PropTypes.shape({
-                    type: PropTypes.oneOf([ModalBody])
+                    type: PropTypes.oneOf([BootstrapModalBody])
                 }), 
                 PropTypes.shape({
-                    type: PropTypes.oneOf([ModalFooter])
+                    type: PropTypes.oneOf([BootstrapModalFooter])
                 })
             ])
         )

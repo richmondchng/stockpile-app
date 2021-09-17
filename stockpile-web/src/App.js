@@ -9,7 +9,6 @@ import About from './pages/About';
 import Toasts from './components/ui/notification/Toast';
 import Alert from './components/ui/notification/Alert'
 import { useSelector } from 'react-redux';
-import { useState, useEffect } from 'react';
 import { useCloseAlert } from './components/util/alert-notification';
 
 function App() {
@@ -27,9 +26,9 @@ function App() {
                 <div className="container" id="content">
                     <div>
                         <br />
-                        <Alert show={alert.show} variant={alert.variant} title={alert.title} onClose={() => {
-                            closeAlert()
-                        }}>{alert.message}</Alert>
+                        <Alert show={alert.show} variant={alert.variant} title={alert.title} onClose={() => {closeAlert()}}>
+                            {alert.message}
+                        </Alert>
                     </div>
                     <Switch>
                         <Route exact path="/"><Home /></Route>

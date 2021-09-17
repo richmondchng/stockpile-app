@@ -36,17 +36,6 @@ const ImportSchemaModal = ({idx, title, show, currentData, postSubmitAction, pos
     const message = update ? `Import schema configuration ${modalData.name} updated` : `Import schema configuration ${modalData.name} added`
     const buttonLabel = update ? 'Update' : 'Add';
     const formId = `${idx}-form`;
-    // let successMessage = update ? 'Record updated' : 'Record added';
-    // // alert
-    // const [alertInfo, setAlertInfo] = useState({
-    //     show: false,
-    //     msg: successMessage
-    // });
-    // const [alertError, setAlertError] = useState({
-    //     show: false,
-    //     msg: "" 
-    // });
-
 
     useEffect(() => {
         setModalData({
@@ -82,14 +71,7 @@ const ImportSchemaModal = ({idx, title, show, currentData, postSubmitAction, pos
                 body: JSON.stringify({data: [modalData]})
             });
             if(res.status === 200) {
-                // reload table
-                // setDisableButton(true);
-                // setAlertInfo({
-                //     ...alertInfo,
-                //     show: true
-                // });
                 showInfoToast(message);
-
                 setDisableButton(false);
                 postSubmitAction();
             } else {
@@ -102,10 +84,6 @@ const ImportSchemaModal = ({idx, title, show, currentData, postSubmitAction, pos
                 });
             }
         } catch(err) {
-            // setAlertError({
-            //     show: true,
-            //     msg: err
-            // });
             console.error(err);
         }
     }

@@ -28,7 +28,7 @@ const ConfigureUploadSchemas = () => {
     // get list of upload schemas to populate table
     useEffect(() => {
         const getUploadSchemas = async () => {
-            console.log("get available schemas");
+            //console.log("get available schemas");
             try {
                 const response = await fetch('/api/v1.0/schemas', { method: 'GET'});
                 if(response.status === 200) {
@@ -46,6 +46,16 @@ const ConfigureUploadSchemas = () => {
         getUploadSchemas();
     }, [reloadTable]);
 
+    const resetForm = () => {
+        setShowAdd(false);
+        setShowUpdate(false);
+        setCurrentData({
+            name: "",
+            description: "",
+            topic: ""
+        });
+    }
+
     // delete import schema details
     const deleteImportSchemaDetails = async (schema) => {
         console.log(`Delete ${JSON.stringify(schema)}`);
@@ -60,31 +70,14 @@ const ConfigureUploadSchemas = () => {
                     }
                 });
                 if(res.status === 200) {
-                    // reload table
-                    // setAlertInfo({
-                    //     msg: 'Record deleted',
-                    //     show: true
-                    // });
                     setReloadTable(reloadTable + 1);
                     showWarningToast('Record deleted');
-                    //dispatch(showWarning('Record deleted'));
                 } else {
-                    //console.log("Error " + res.status);
                     const resData = await res.json();
                     console.log("Error " + res.status + " " +  JSON.stringify(resData));
-                    // setAlertError({
-                    //     show: true,
-                    //     msg: resData.message
-                    // });
-                    
-                    //dispatch(showError('Error deleting record'));
                     showErrorToast('Error deleting record');
                 }
             } catch(err) {
-                // setAlertError({
-                //     show: true,
-                //     msg: err
-                // });
                 console.error("error=" + err);
                 showErrorToast('Error deleting record');
             }
@@ -94,8 +87,6 @@ const ConfigureUploadSchemas = () => {
     return (
         <div>
             <PageTitle>Configure Upload Schemas</PageTitle>
-            {/* <InfoAlert show={alertInfo.show}>{alertInfo.msg}</InfoAlert>
-            <ErrorAlert show={alertError.show}>{alertError.msg}</ErrorAlert> */}
             <table className="table caption-top table-bordered table-striped table-hover">
                 <caption>List of upload schema</caption>
                 <thead>
@@ -136,26 +127,18 @@ const ConfigureUploadSchemas = () => {
                 currentData={currentData}
                 postSubmitAction={() => {
                     setReloadTable(reloadTable + 1);
-                    setShowAdd(false);
-                    setCurrentData({
-                        name: "",
-                        description: "",
-                        topic: ""
-                    });
+                    resetForm();
                 }}
-                postCancelAction={() => setShowAdd(false)}></ImportSchemaModal>
+                postCancelAction={() => resetForm()}>
+            </ImportSchemaModal>
             <ImportSchemaModal idx="update-schema" title="Update Upload Schema Configuration" show={showUpdate}
                 currentData={currentData}
                 postSubmitAction={() => {
                     setReloadTable(reloadTable + 1);
-                    setShowUpdate(false);
-                    setCurrentData({
-                        name: "",
-                        description: "",
-                        topic: ""
-                    });
+                    resetForm();
                 }}
-                postCancelAction={() => setShowUpdate(false)}></ImportSchemaModal>
+                postCancelAction={() => resetForm()}>
+            </ImportSchemaModal>
         </div>
     )
 }

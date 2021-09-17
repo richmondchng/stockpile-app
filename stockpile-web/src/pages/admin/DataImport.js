@@ -37,9 +37,11 @@ const DataImport = () => {
                         return { key: value.schema, value : value.name};
                     }));
                     // setUploadSchemas(jsonData.data);
+                } else {
+                    console.log(`Error getting upload schemas with error code: ${response.status}`);
                 }
             } catch(err) {
-                console.error(err);
+                console.error(`Exception caught: ${err}`);
             }
         };
         
